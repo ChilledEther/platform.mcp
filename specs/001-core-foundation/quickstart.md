@@ -3,13 +3,13 @@
 ## Installation
 
 ```bash
-go get github.com/jjr/platform.mcp/pkg/scaffold
+go get github.com/modelcontextprotocol/platform.mcp/pkg/scaffold
 ```
 
 ## Usage
 
 ```go
-import "github.com/jjr/platform.mcp/pkg/scaffold"
+import "github.com/modelcontextprotocol/platform.mcp/pkg/scaffold"
 
 func main() {
     cfg := scaffold.Config{

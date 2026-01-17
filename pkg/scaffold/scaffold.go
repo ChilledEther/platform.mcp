@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"text/template"
 
-	"github.com/jjr/platform.mcp/pkg/scaffold/internal/templates"
+	"github.com/modelcontextprotocol/platform.mcp/internal/templates"
 )
 
 // Generate returns a slice of File structs with the generated content.

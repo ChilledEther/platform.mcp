@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+bun.lockb
+
+# Build output
+dist/
+build/
+
+# Test files
+tests/
+*.test.ts
+
+# Development files
+*.md
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Legacy Go code (not needed in container)
+legacy/
+
+# Spec files
+specs/
+.specify/
+.gemini/
+
+# Environment
+.env
+.env.*

@@ -1,0 +1,64 @@
+# Contract: Deployment Workflow Structure
+
+This document defines the expected structure (contract) of the GitHub Actions workflow file.
+
+## Schema: GitHub Actions Workflow
+
+**File**: `.github/workflows/docker-build-publish.yml`
+
+```yaml
+name: docker-build-publish
+run-name: "docker-build-publish: ${{ github.ref_name }}"
+
+on:
+  push:
+    branches: ['main']
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        include:
+          - implementation: typescript
+            context: ./implementations/typescript
+            image_suffix: -ts
+          - implementation: go
+            context: ./implementations/go
+            image_suffix: -go
+
+    steps:
+      - name: github-checkout
+        uses: actions/checkout@v6
+
+      - name: docker-login
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: docker-meta
+        id: docker-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}${{ matrix.image_suffix }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=sha-,format=short
+
+      - name: docker-build-push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
+```

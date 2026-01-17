@@ -1,0 +1,38 @@
+# Binaries
+mcp-server
+!**/cmd/mcp-server/
+*.exe
+*.test
+*.out
+bin/
+dist/
+
+# Dependencies
+vendor/
+node_modules/
+
+# Bun
+bun.lockb
+
+# TypeScript
+*.tsbuildinfo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/
+
+# Build output
+build/

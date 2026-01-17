@@ -68,3 +68,10 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - **Validation**: Ensure all tests pass in Docker.
 
 **Version**: 2.2.0 | **Updated**: 2026-01-17
+
+## Active Technologies
+- Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package (001-core-foundation)
+- N/A (Pure functions) (001-core-foundation)
+
+## Recent Changes
+- 001-core-foundation: Added Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package

@@ -1,0 +1,23 @@
+{
+  "name": "generate_scaffold",
+  "description": "Generates GitHub Actions workflows and project scaffolding based on configuration.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "project_name": {
+        "type": "string",
+        "description": "The name of the project"
+      },
+      "use_docker": {
+        "type": "boolean",
+        "description": "Whether to include Docker-related workflows"
+      },
+      "workflow_type": {
+        "type": "string",
+        "enum": ["go", "typescript", "python"],
+        "description": "The primary language of the project"
+      }
+    },
+    "required": ["project_name"]
+  }
+}

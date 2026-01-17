@@ -1,13 +1,13 @@
-# <!--
+<!--
 
-# SYNC IMPACT REPORT
+SYNC IMPACT REPORT
 
-Version Change: 2.1.1 → 2.2.0 (MINOR - added MCP tool naming standards)
+Version Change: 2.2.0 → 2.3.0 (MINOR - Added Minimal Footprint principle)
 
 Modified Principles: None
 
 Added Principles:
-- VI. MCP Tool Naming Standards
+- VII. Minimal Footprint
 
 Added Sections: None
 
@@ -20,7 +20,7 @@ Templates Requiring Updates:
 - .specify/templates/checklist-template.md ✅ (compatible)
 - .specify/templates/agent-file-template.md ✅ (compatible)
 
-# Follow-up TODOs: None
+Follow-up TODOs: None
 
 -->
 
@@ -102,6 +102,16 @@ Tools exposed via MCP MUST follow a consistent naming convention to ensure predi
 
 **Rationale**: Consistent naming allows AI agents to more easily discover and understand the purpose of tools, leading to higher reliability and better performance.
 
+### VII. Minimal Footprint
+
+Dependencies MUST be minimized. Prefer standard library solutions over third-party packages unless the external package provides significant, non-trivial value (e.g., `cobra`, `mcp-sdk`).
+
+- **Review dependencies**: Every new dependency MUST be justified.
+- **Standard Lib First**: Use `net/http`, `encoding/json`, `os`, etc., before reaching for helpers.
+- **Keep it Lean**: Avoid massive frameworks for simple tasks.
+
+**Rationale**: Reduces security surface area, simplifies the build chain, and ensures long-term maintainability by reducing reliance on external upstreams.
+
 ## Technology Stack
 
 The following technologies are mandated for the Go implementation:
@@ -147,7 +157,7 @@ This repository uses Google's **Release Please** for automated release managemen
 feat(github): add workflow generation for Go projects
 fix(scaffold): correct file permissions on generated files
 feat(mcp)!: redesign tool registration API
-docs: update constitution to v2.1.1
+docs: update constitution to v2.3.0
 ```
 
 ## Development Workflow
@@ -237,4 +247,4 @@ This constitution supersedes all other development practices for Platform MCP.
 - Deviations MUST be justified in the Complexity Tracking section of the plan
 - Runtime development guidance lives in `AGENTS.md`
 
-**Version**: 2.2.0 | **Ratified**: 2026-01-17 | **Last Amended**: 2026-01-17
+**Version**: 2.3.0 | **Ratified**: 2026-01-17 | **Last Amended**: 2026-01-17

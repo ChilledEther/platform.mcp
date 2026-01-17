@@ -9,6 +9,7 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
   - `cmd/`: Entry points for applications (CLI, MCP, etc.).
 - **Standards**: All development MUST follow the **Constitution** at `.specify/memory/constitution.md`.
 - **TDD**: Red-Green-Refactor is non-negotiable. Write failing tests before implementation.
+- **Dependencies**: Minimal footprint (Constitution VII). Prefer standard lib.
 
 ## Development Workflow
 
@@ -34,6 +35,11 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - **Convention**: `snake_case` using `verb_noun`.
 - **Verbs**: `get`, `create`, `update`, `delete`, `list`, `search`, `analyze`, `generate`, `validate`.
 - **Examples**: `get_firewall_rules`, `list_resources`.
+
+### Minimal Footprint (CONSTITUTION VII)
+- **Rule**: Minimize dependencies.
+- **Preference**: Use standard library (`net/http`, `encoding/json`) over external packages where possible.
+- **Justification**: New dependencies must provide significant value (e.g., `cobra`, `mcp-sdk`).
 
 ### Go Implementation
 - **Project Layout**: Follows [golang-standards/project-layout](https://github.com/golang-standards/project-layout).
@@ -67,7 +73,7 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - **Plan**: Use `/speckit.plan` (via Task tool) to generate design before writing code.
 - **Validation**: Ensure all tests pass in Docker.
 
-**Version**: 2.2.0 | **Updated**: 2026-01-17
+**Version**: 2.3.0 | **Updated**: 2026-01-17
 
 ## Active Technologies
 - Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package (001-core-foundation, 002-platform-cli)

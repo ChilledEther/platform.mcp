@@ -17,9 +17,9 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [X] T001 Initialize Go module in implementations/go/pkg/scaffold/go.mod
+- [X] T001 Initialize Go module in pkg/scaffold/go.mod
 - [X] T002 Create initial directory structure for pkg/scaffold
-- [X] T003 [P] Configure golangci-lint in implementations/go/.golangci.yml
+- [X] T003 [P] Configure golangci-lint in .golangci.yml
 
 ---
 
@@ -29,9 +29,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [X] T004 Define File and Config structs in implementations/go/pkg/scaffold/types.go
-- [X] T005 Define Generator interface in implementations/go/pkg/scaffold/generator.go
-- [X] T006 Implement Config validation logic in implementations/go/pkg/scaffold/validate.go
+- [X] T004 Define File and Config structs in pkg/scaffold/types.go
+- [X] T005 Define Generator interface in pkg/scaffold/generator.go
+- [X] T006 Implement Config validation logic in pkg/scaffold/validate.go
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -47,11 +47,11 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [X] T007 [P] [US1] Create unit tests for basic generation in implementations/go/pkg/scaffold/scaffold_test.go
-- [X] T008 [P] [US1] Create table-driven tests for workflow paths in implementations/go/pkg/scaffold/scaffold_test.go
-- [X] T009 [US1] Implement Generate function skeleton in implementations/go/pkg/scaffold/scaffold.go
-- [X] T010 [US1] Implement hardcoded workflow content generation in implementations/go/pkg/scaffold/scaffold.go
-- [X] T011 [US1] Add side-effect verification (read-only filesystem check) in implementations/go/pkg/scaffold/scaffold_test.go
+- [X] T007 [P] [US1] Create unit tests for basic generation in pkg/scaffold/scaffold_test.go
+- [X] T008 [P] [US1] Create table-driven tests for workflow paths in pkg/scaffold/scaffold_test.go
+- [X] T009 [US1] Implement Generate function skeleton in pkg/scaffold/scaffold.go
+- [X] T010 [US1] Implement hardcoded workflow content generation in pkg/scaffold/scaffold.go
+- [X] T011 [US1] Add side-effect verification (read-only filesystem check) in pkg/scaffold/scaffold_test.go
 
 **Checkpoint**: User Story 1 functional and testable independently.
 
@@ -65,10 +65,10 @@
 
 ### Tests for User Story 2 (TDD Mandatory) ⚠️
 
-- [X] T012 [P] [US2] Add tests for UseDocker configuration in implementations/go/pkg/scaffold/scaffold_test.go
-- [X] T013 [P] [US2] Add tests for WorkflowType selection in implementations/go/pkg/scaffold/scaffold_test.go
-- [X] T014 [US2] Implement conditional Dockerfile generation in implementations/go/pkg/scaffold/scaffold.go
-- [X] T015 [US2] Implement WorkflowType selection logic in implementations/go/pkg/scaffold/scaffold.go
+- [X] T012 [P] [US2] Add tests for UseDocker configuration in pkg/scaffold/scaffold_test.go
+- [X] T013 [P] [US2] Add tests for WorkflowType selection in pkg/scaffold/scaffold_test.go
+- [X] T014 [US2] Implement conditional Dockerfile generation in pkg/scaffold/scaffold.go
+- [X] T015 [US2] Implement WorkflowType selection logic in pkg/scaffold/scaffold.go
 
 **Checkpoint**: User Story 2 integrated and testable.
 
@@ -82,11 +82,11 @@
 
 ### Tests for User Story 3 (TDD Mandatory) ⚠️
 
-- [X] T016 [P] [US3] Create tests for template embedding in implementations/go/pkg/scaffold/templates_test.go
-- [X] T017 [P] [US3] Create tests for template parsing with placeholders in implementations/go/pkg/scaffold/templates_test.go
-- [X] T018 [US3] Create template directory and initial workflow templates in implementations/go/internal/templates/
-- [X] T019 [US3] Implement go:embed for templates in implementations/go/internal/templates/templates.go
-- [X] T020 [US3] Refactor Generate to use text/template with embedded files in implementations/go/pkg/scaffold/scaffold.go
+- [X] T016 [P] [US3] Create tests for template embedding in pkg/scaffold/templates_test.go
+- [X] T017 [P] [US3] Create tests for template parsing with placeholders in pkg/scaffold/templates_test.go
+- [X] T018 [US3] Create template directory and initial workflow templates in internal/templates/
+- [X] T019 [US3] Implement go:embed for templates in internal/templates/templates.go
+- [X] T020 [US3] Refactor Generate to use text/template with embedded files in pkg/scaffold/scaffold.go
 
 **Checkpoint**: All user stories functional.
 

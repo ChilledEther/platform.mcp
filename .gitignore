@@ -1,4 +1,5 @@
 # Binaries
+platform
 mcp-server
 !**/cmd/mcp-server/
 *.exe

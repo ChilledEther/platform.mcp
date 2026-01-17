@@ -11,7 +11,7 @@ import (
 // GenerateWorkflowsInput defines the input for the generate_workflows tool.
 type GenerateWorkflowsInput struct {
 	ProjectName  string `json:"project_name" jsonschema:"The name of the project for which to generate workflows."`
-	UseDocker    bool   `json:"use_docker" jsonschema:"Whether to include Docker-related workflow steps."`
+	UseDocker    bool   `json:"docker" jsonschema:"Whether to include Docker-related workflow steps."`
 	WorkflowType string `json:"workflow_type" jsonschema:"The type of workflow to generate (go, typescript, python)."`
 }
 

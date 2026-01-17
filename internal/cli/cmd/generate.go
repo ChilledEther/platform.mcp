@@ -94,7 +94,7 @@ func init() {
 
 	workflowsCmd.Flags().StringVarP(&projectName, "project-name", "p", "", "Name of the project")
 	workflowsCmd.Flags().BoolVarP(&useDocker, "docker", "d", false, "Include Dockerfile")
-	workflowsCmd.Flags().StringVarP(&workflowType, "workflow-type", "t", "go", "Type of workflow (go, typescript, python)")
+	workflowsCmd.Flags().StringVarP(&workflowType, "workflow-type", "t", "go", "Type of workflow (go, typescript, node, python)")
 	workflowsCmd.Flags().BoolVar(&dryRun, "dry-run", false, "Preview only")
 	workflowsCmd.Flags().BoolVarP(&force, "force", "f", false, "Overwrite existing files")
 	workflowsCmd.Flags().StringVarP(&outputDir, "output", "o", ".", "Target directory")

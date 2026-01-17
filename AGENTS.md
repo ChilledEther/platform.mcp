@@ -79,6 +79,8 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package (001-core-foundation, 002-platform-cli)
 - N/A (Pure functions) (001-core-foundation)
 - MCP Server with `github.com/modelcontextprotocol/go-sdk` (003-platform-mcp)
+- Go 1.25.5 + None (static binary, Alpine runtime) (998-docker-environment)
+- N/A (stateless containers) (998-docker-environment)
 
 ## Recent Changes
 - 002-platform-cli: Generated research, data-model, contracts, and implementation plan for the CLI tool.

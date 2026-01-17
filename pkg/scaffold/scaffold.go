@@ -21,6 +21,10 @@ func Generate(cfg Config) ([]File, error) {
 	if wtype == "" {
 		wtype = "go"
 	}
+	// Alias node -> typescript
+	if wtype == "node" {
+		wtype = "typescript"
+	}
 
 	tmplName := fmt.Sprintf("%s.yaml.tmpl", wtype)
 	tmplContent, err := templates.FS.ReadFile(tmplName)

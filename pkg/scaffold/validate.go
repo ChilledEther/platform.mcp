@@ -18,7 +18,7 @@ func ValidateConfig(cfg Config) error {
 	}
 
 	switch cfg.WorkflowType {
-	case "go", "typescript", "python", "":
+	case "go", "typescript", "python", "node", "":
 		// Valid
 	default:
 		return errors.New("unsupported workflow type")

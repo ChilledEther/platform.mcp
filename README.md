@@ -6,13 +6,22 @@ A powerful Model Context Protocol (MCP) platform built with **Go**. This reposit
 
 ## ✨ Features
 
-- **Standard MCP Protocol**: Full implementation of Model Context Protocol.
-- **Dual Artifacts**:
-  - **CLI (`platform`)**: For human operators to manage resources and scaffolding.
-  - **MCP Server (`platform-mcp`)**: For AI agents to interact with the platform.
-- **Core-First Architecture**: Shared logic in `pkg/` ensures consistency.
-- **TDD Mandatory**: Rigorous test-driven development for reliability.
-- **Container Ready**: Optimized Alpine-based Docker images.
+Platform MCP is a comprehensive toolset for infrastructure scaffolding:
+
+- **[Core Foundation](./docs/features.md#core-foundation-001)**: Shared logic for reliable file generation.
+- **[Platform CLI](./docs/features.md#platform-cli-002)**: Cobra-based CLI for local development.
+- **[MCP Server](./docs/features.md#platform-mcp-server-003)**: AI-native interface for agentic workflows.
+- **[Dockerized](./docs/features.md#docker-environment-998)**: Minimal, multi-stage Alpine images.
+- **[CI/CD Pipeline](./docs/features.md#deployment-pipeline-999)**: Automated tests, releases, and publishing.
+
+---
+
+## 📚 Documentation
+
+- **[Architecture](./docs/architecture.md)**: Deep dive into the project structure and design principles.
+- **[Feature List](./docs/features.md)**: Detailed breakdown of current capabilities.
+- **[Development Guide](./docs/development.md)**: Workflow, scripts, and testing instructions.
+- **[Specifications](./specs/)**: Technical specs and implementation plans.
 
 ---
 

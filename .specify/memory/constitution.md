@@ -1,50 +1,232 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# <!--
+
+# SYNC IMPACT REPORT
+
+Version Change: 2.1.0 → 2.1.1 (PATCH - added Release Please to technology stack)
+
+Modified Principles: None
+
+Technology Stack Changes:
+
+- Added Release Please for automated versioning and CHANGELOG generation
+
+Added Sections: None
+
+Removed Sections: None
+
+Templates Requiring Updates:
+
+- .specify/templates/plan-template.md ✅ (compatible - uses generic Constitution Check)
+- .specify/templates/spec-template.md ✅ (compatible - technology-agnostic)
+- .specify/templates/tasks-template.md ✅ (compatible - supports TDD workflow)
+- .specify/templates/checklist-template.md ✅ (compatible - generic structure)
+- .specify/templates/agent-file-template.md ✅ (compatible - generates from plans)
+
+# Follow-up TODOs: None
+
+-->
+
+# Platform MCP Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Core-First Architecture
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All functionality MUST be implemented in shared core packages (`pkg/`) before any consumer (CLI or MCP) is built.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Core packages are responsible for **logic only**; they return data, never perform I/O directly
+- CLI handles disk I/O (writing files, reading user input)
+- MCP handles network I/O (returning structured responses to agents)
+- Both consumers import the same core—no duplicated logic
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Ensures testability, prevents code duplication, and enables consistent behavior across both artifacts.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Test-Driven Development (TDD) — NON-NEGOTIABLE
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Every feature MUST follow the Red-Green-Refactor cycle. No exceptions.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+1. **Write tests first**: Tests MUST be written before implementation
+2. **User approval**: Test plan MUST be reviewed before implementation begins
+3. **Tests MUST fail**: Verify tests fail before writing implementation
+4. **Implement to pass**: Write minimal code to make tests pass
+5. **Refactor**: Clean up while keeping tests green
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: TDD catches design flaws early, produces self-documenting code, and ensures all functionality is verified.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. Modular Extensibility
+
+The architecture MUST support adding new features without modifying existing code.
+
+- Each feature (e.g., GitHub Actions generator, Dockerfile generator) is a self-contained module
+- Modules register themselves via a common interface (`Generator`, `Tool`, etc.)
+- Adding a new module MUST NOT require changes to the CLI or MCP entry points
+- Feature flags or configuration control which modules are active
+
+**Rationale**: Enables the platform to grow into a general-purpose MCP while keeping each feature isolated and maintainable.
+
+### IV. Separate Artifacts, Shared Core
+
+This repository produces **two distinct binaries** that share the same core packages:
+
+| Artifact   | Binary Name    | Purpose                                         |
+| :--------- | :------------- | :---------------------------------------------- |
+| CLI Tool   | `platform`     | For human operators; writes files to disk       |
+| MCP Server | `platform-mcp` | For AI agents; returns content via MCP protocol |
+
+**Requirements**:
+
+- Both binaries MUST import logic exclusively from `pkg/`
+- The CLI (`platform`) handles disk I/O and user interaction
+- The MCP server (`platform-mcp`) handles MCP protocol and agent communication
+- No shared entry point—each has its own `main.go` in `cmd/`
+
+**Rationale**: Separate binaries allow independent versioning, smaller container images, and clearer separation of concerns while maintaining a single source of truth for business logic.
+
+### V. Docker-First Deployment
+
+All development, testing, and deployment MUST be containerized.
+
+- Dockerfiles MUST reside in `/build/package/`
+- All tests MUST pass inside the container (same environment as production)
+- Multi-stage builds MUST produce minimal Alpine-based images
+- Local development MAY use native Go, but CI/CD runs in Docker
+
+**Rationale**: Eliminates "works on my machine" issues and ensures consistent behavior across environments.
+
+## Technology Stack
+
+The following technologies are mandated for the Go implementation:
+
+| Component          | Technology                                                     | Notes                                         |
+| :----------------- | :------------------------------------------------------------- | :-------------------------------------------- |
+| Language           | Go 1.25+                                                       | Use latest stable features                    |
+| MCP SDK            | `github.com/modelcontextprotocol/go-sdk`                       | Official MCP Go SDK                           |
+| CLI Framework      | `github.com/spf13/cobra`                                       | For `platform` CLI                            |
+| Templates          | Go `embed` package                                             | Bundle templates in binaries                  |
+| Testing            | `go test` with table-driven tests                              | TDD mandatory                                 |
+| Containerization   | Docker (Alpine-based)                                          | Multi-stage builds                            |
+| Config Format      | YAML                                                           | All generated files (`.github/` workflows)    |
+| Scripts            | Bash (`.sh`)                                                   | Standard                                      |
+| Release Automation | [Release Please](https://github.com/googleapis/release-please) | Automated versioning via Conventional Commits |
+
+### Release Please Configuration
+
+This repository uses Google's **Release Please** for automated release management:
+
+- **Conventional Commits**: All commits MUST follow [Conventional Commits](https://www.conventionalcommits.org/) format
+- **Automated CHANGELOG**: Release Please generates `CHANGELOG.md` from commit history
+- **Version Bumping**: Semantic versioning determined automatically from commit types:
+  - `feat:` → MINOR bump
+  - `fix:` → PATCH bump
+  - `feat!:` or `BREAKING CHANGE:` → MAJOR bump
+- **Release PRs**: Release Please creates PRs to prepare releases
+- **Multi-component**: Configured for monorepo with separate versioning per artifact
+
+**Commit Format**:
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**Examples**:
+
+```
+feat(github): add workflow generation for Go projects
+fix(scaffold): correct file permissions on generated files
+feat(mcp)!: redesign tool registration API
+docs: update constitution to v2.1.1
+```
+
+## Development Workflow
+
+### Adding a New Feature
+
+1. **Spec First**: Create specification in `/specs/###-feature-name/`
+2. **Core Package**: Implement logic in `pkg/<feature>/` with full test coverage
+3. **CLI Integration**: Add command in `cmd/platform/` that calls core
+4. **MCP Integration**: Register tool in `cmd/platform-mcp/` that calls core
+5. **Docker Verification**: Ensure all tests pass in container for both artifacts
+
+### Directory Structure (Go Implementation)
+
+Based on [golang-standards/project-layout](https://github.com/golang-standards/project-layout):
+
+```text
+implementations/go/
+├── cmd/                        # Main applications
+│   ├── platform/               # CLI entry point (main.go)
+│   └── platform-mcp/           # MCP server entry point (main.go)
+│
+├── pkg/                        # Public library code (importable by external projects)
+│   ├── github/                 # GitHub Actions generation
+│   └── scaffold/               # File scaffolding utilities
+│
+├── internal/                   # Private code (compiler-enforced)
+│   ├── cli/                    # CLI-specific helpers
+│   ├── mcp/                    # MCP server and tool registration
+│   └── templates/              # Embedded template files (via go:embed)
+│
+├── test/                       # Additional test apps and test data
+│   ├── testdata/               # Test fixtures and golden files
+│   └── integration/            # Integration test harnesses
+│
+├── build/                      # Packaging and CI
+│   └── package/                # Dockerfiles
+│       ├── platform/           # Dockerfile for CLI
+│       │   └── Dockerfile
+│       └── platform-mcp/       # Dockerfile for MCP server
+│           └── Dockerfile
+│
+├── scripts/                    # Build automation (PowerShell)
+│   ├── Build-All.ps1
+│   └── Test-Docker.ps1
+│
+├── configs/                    # Configuration templates
+│   └── default.yaml
+│
+├── api/                        # API definitions (future: OpenAPI, protobuf)
+│
+├── .release-please-manifest.json  # Release Please version tracking
+├── release-please-config.json     # Release Please configuration
+└── go.mod
+```
+
+### Directory Purpose Reference
+
+| Directory        | Purpose                                    | golang-standards alignment |
+| :--------------- | :----------------------------------------- | :------------------------- |
+| `/cmd`           | Main application entry points              | Standard                   |
+| `/pkg`           | Public library code, importable externally | Standard                   |
+| `/internal`      | Private code, compiler-enforced isolation  | Standard                   |
+| `/test`          | External test apps and test data           | Standard                   |
+| `/build/package` | Dockerfiles and container configs          | Standard                   |
+| `/scripts`       | Build, install, analysis scripts           | Standard                   |
+| `/configs`       | Configuration file templates               | Standard                   |
+| `/api`           | OpenAPI specs, protocol definitions        | Standard (future)          |
+
+**Note**: Do NOT use `/src` — this is a Java pattern, not idiomatic Go.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices for Platform MCP.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Amendment Process**:
+
+1. Proposed changes MUST be documented with rationale
+2. Changes MUST be reviewed and approved before implementation
+3. Version number MUST be updated according to semantic versioning:
+   - MAJOR: Backward-incompatible principle changes
+   - MINOR: New principles or sections added
+   - PATCH: Clarifications and wording improvements
+
+**Compliance**:
+
+- All PRs MUST verify compliance with these principles
+- Deviations MUST be justified in the Complexity Tracking section of the plan
+- Runtime development guidance lives in `AGENTS.md`
+
+**Version**: 2.1.1 | **Ratified**: 2026-01-17 | **Last Amended**: 2026-01-17

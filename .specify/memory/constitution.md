@@ -160,12 +160,11 @@ docs: update constitution to v2.1.1
 4. **MCP Integration**: Register tool in `cmd/platform-mcp/` that calls core
 5. **Docker Verification**: Ensure all tests pass in container for both artifacts
 
-### Directory Structure (Go Implementation)
+### Directory Structure
 
 Based on [golang-standards/project-layout](https://github.com/golang-standards/project-layout):
 
 ```text
-implementations/go/
 ├── cmd/                        # Main applications
 │   ├── platform/               # CLI entry point (main.go)
 │   └── platform-mcp/           # MCP server entry point (main.go)

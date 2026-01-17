@@ -5,7 +5,10 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "implementations/**"
+      - "pkg/**"
+      - "cmd/**"
+      - "internal/**"
+      - "build/package/**"
       - ".github/workflows/docker-build-publish.yaml"
   workflow_dispatch:
 
@@ -14,22 +17,11 @@ env:
 
 jobs:
   docker-build-push:
-    name: docker-build-push (${{ matrix.implementation }})
+    name: docker-build-push
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - implementation: typescript
-            context: ./implementations/typescript
-            image_suffix: -ts
-          - implementation: go
-            context: ./implementations/go
-            image_suffix: -go
 
     steps:
       - name: github-checkout
@@ -46,7 +38,7 @@ jobs:
         id: docker-meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}${{ matrix.image_suffix }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
           tags: |
             type=raw,value=latest
             type=sha,prefix=sha-,format=short
@@ -54,7 +46,8 @@ jobs:
       - name: docker-build-push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ matrix.context }}
+          context: .
+          file: build/package/platform-mcp/Dockerfile
           push: true
           tags: ${{ steps.docker-meta.outputs.tags }}
           labels: ${{ steps.docker-meta.outputs.labels }}

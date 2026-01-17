@@ -31,9 +31,34 @@ go run cmd/platform/main.go
 
 ### Running the MCP Server
 
+The MCP server uses `stdio` transport. You can run it directly:
+
 ```bash
 go run cmd/platform-mcp/main.go
 ```
+
+To use it with Claude Desktop, add the following to your configuration:
+
+```json
+{
+  "mcpServers": {
+    "platform": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "platform-mcp:latest"]
+    }
+  }
+}
+```
+
+## 🛠️ MCP Tools
+
+### `generate_workflows`
+Generates GitHub Actions workflows and Dockerfiles based on project parameters.
+
+- **Parameters**:
+  - `project_name` (string, required): The name of the project.
+  - `workflow_type` (string, optional): One of `go`, `typescript`, `python`. Default is `go`.
+  - `use_docker` (boolean, optional): Whether to generate a Dockerfile. Default is `false`.
 
 ---
 

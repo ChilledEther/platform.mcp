@@ -7,17 +7,17 @@
 - [x] Update agent context in `AGENTS.md` <!-- id: 3 -->
 
 ## Phase 2: Implementation (TDD)
-- [ ] Create test harness for MCP tool execution in `internal/mcp` <!-- id: 4 -->
-- [ ] Implement MCP server initialization in `cmd/platform-mcp/main.go` <!-- id: 5 -->
-- [ ] Implement `generate_workflows` tool handler in `internal/mcp` <!-- id: 6 -->
-- [ ] Verify tool execution with table-driven tests <!-- id: 7 -->
+- [x] Create test harness for MCP tool execution in `internal/mcp` <!-- id: 4 -->
+- [x] Implement MCP server initialization in `cmd/platform-mcp/main.go` <!-- id: 5 -->
+- [x] Implement `generate_workflows` tool handler in `internal/mcp` <!-- id: 6 -->
+- [x] Verify tool execution with table-driven tests <!-- id: 7 -->
 
 ## Phase 3: Integration & Packaging
-- [ ] Configure `stdio` transport for the server <!-- id: 8 -->
-- [ ] Add `platform-mcp` Dockerfile in `build/package/platform-mcp/` <!-- id: 9 -->
-- [ ] Verify Docker build and execution <!-- id: 10 -->
-- [ ] Update project README with MCP server details <!-- id: 11 -->
+- [x] Configure `stdio` transport for the server <!-- id: 8 -->
+- [x] Add `platform-mcp` Dockerfile in `build/package/platform-mcp/` <!-- id: 9 -->
+- [x] Verify Docker build and execution <!-- id: 10 -->
+- [x] Update project README with MCP server details <!-- id: 11 -->
 
 ## Phase 4: Final Validation
-- [ ] Perform manual end-to-end test with Claude Desktop <!-- id: 12 -->
-- [ ] Verify compliance with Constitution (especially naming and logic location) <!-- id: 13 -->
+- [x] Perform manual end-to-end test with Claude Desktop <!-- id: 12 -->
+- [x] Verify compliance with Constitution (especially naming and logic location) <!-- id: 13 -->

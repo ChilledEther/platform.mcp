@@ -81,6 +81,8 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - MCP Server with `github.com/modelcontextprotocol/go-sdk` (003-platform-mcp)
 - Go 1.25.5 + None (static binary, Alpine runtime) (998-docker-environment)
 - N/A (stateless containers) (998-docker-environment)
+- Go 1.25+ (per constitution) + GitHub Actions, Release Please, Docker Buildx (999-deployment)
+- N/A (GitHub-managed: Releases, Container Registry) (999-deployment)
 
 ## Recent Changes
 - 002-platform-cli: Generated research, data-model, contracts, and implementation plan for the CLI tool.

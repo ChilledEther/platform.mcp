@@ -2,25 +2,23 @@
 
 # SYNC IMPACT REPORT
 
-Version Change: 2.1.0 → 2.1.1 (PATCH - added Release Please to technology stack)
+Version Change: 2.1.1 → 2.2.0 (MINOR - added MCP tool naming standards)
 
 Modified Principles: None
 
-Technology Stack Changes:
-
-- Added Release Please for automated versioning and CHANGELOG generation
+Added Principles:
+- VI. MCP Tool Naming Standards
 
 Added Sections: None
 
 Removed Sections: None
 
 Templates Requiring Updates:
-
-- .specify/templates/plan-template.md ✅ (compatible - uses generic Constitution Check)
-- .specify/templates/spec-template.md ✅ (compatible - technology-agnostic)
-- .specify/templates/tasks-template.md ✅ (compatible - supports TDD workflow)
-- .specify/templates/checklist-template.md ✅ (compatible - generic structure)
-- .specify/templates/agent-file-template.md ✅ (compatible - generates from plans)
+- .specify/templates/plan-template.md ✅ (compatible)
+- .specify/templates/spec-template.md ✅ (compatible)
+- .specify/templates/tasks-template.md ✅ (compatible)
+- .specify/templates/checklist-template.md ✅ (compatible)
+- .specify/templates/agent-file-template.md ✅ (compatible)
 
 # Follow-up TODOs: None
 
@@ -92,6 +90,17 @@ All development, testing, and deployment MUST be containerized.
 - Local development MAY use native Go, but CI/CD runs in Docker
 
 **Rationale**: Eliminates "works on my machine" issues and ensures consistent behavior across environments.
+
+### VI. MCP Tool Naming Standards
+
+Tools exposed via MCP MUST follow a consistent naming convention to ensure predictability for AI agents.
+
+- Tools MUST be named using `snake_case`
+- Names MUST follow a `verb_noun` pattern (e.g., `get_user`, `list_repos`)
+- Standard verbs MUST be used where applicable: `get`, `create`, `update`, `delete`, `list`, `search`, `analyze`, `generate`, `validate`
+- Nouns MUST be singular unless representing a collection (e.g., `list_items` is acceptable if it returns a list)
+
+**Rationale**: Consistent naming allows AI agents to more easily discover and understand the purpose of tools, leading to higher reliability and better performance.
 
 ## Technology Stack
 
@@ -229,4 +238,4 @@ This constitution supersedes all other development practices for Platform MCP.
 - Deviations MUST be justified in the Complexity Tracking section of the plan
 - Runtime development guidance lives in `AGENTS.md`
 
-**Version**: 2.1.1 | **Ratified**: 2026-01-17 | **Last Amended**: 2026-01-17
+**Version**: 2.2.0 | **Ratified**: 2026-01-17 | **Last Amended**: 2026-01-17

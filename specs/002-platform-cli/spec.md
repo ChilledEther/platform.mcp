@@ -71,9 +71,10 @@ As a developer, I want to preview what will be generated without writing files, 
 - **FR-005**: CLI MUST support `--output` to specify a custom output directory
 - **FR-006**: CLI MUST support `--project-name` to set the project name in generated content
 - **FR-007**: CLI MUST display progress feedback during file generation
-- **FR-008**: CLI MUST return appropriate exit codes (0 for success, non-zero for errors)
-- **FR-009**: CLI MUST import all generation logic from the shared core library (pkg/)
-- **FR-010**: CLI MUST provide `--help` for all commands with clear usage examples
+- **FR-008**: The system MUST accept a `--workflow-type` flag to specify the CI/CD template (e.g., `go`, `node`, `python`)
+- **FR-009**: CLI MUST return appropriate exit codes (0 for success, non-zero for errors)
+- **FR-010**: CLI MUST import all generation logic from the shared core library (pkg/)
+- **FR-011**: CLI MUST provide `--help` for all commands with clear usage examples
 
 ### Key Entities
 
@@ -85,7 +86,7 @@ As a developer, I want to preview what will be generated without writing files, 
 
 ### Measurable Outcomes
 
-- **SC-001**: Users can generate a complete workflow setup in under 5 seconds
+- **SC-001**: Users can generate a complete workflow setup in under 500ms (excluding user think time)
 - **SC-002**: CLI provides clear error messages that help users resolve issues without external documentation
 - **SC-003**: 100% of generated files are syntactically valid YAML
 - **SC-004**: CLI works correctly on Linux, macOS, and Windows

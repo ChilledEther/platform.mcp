@@ -67,6 +67,10 @@ As an AI agent, I want to receive clear error messages when something goes wrong
 
 - **FR-001**: Server MUST implement the MCP protocol for tool discovery and execution
 - **FR-002**: Server MUST provide a `generate_workflows` tool that returns file content
+- **FR-002.1**: The `generate_workflows` tool MUST accept the following parameters:
+  - `project_name` (string, required): Name of the project.
+  - `workflow_type` (string, optional): Type of workflow to generate.
+  - `docker` (boolean, optional): Whether to include Docker assets.
 - **FR-003**: Server MUST return structured responses with file path, content, and permissions
 - **FR-004**: Server MUST NOT write files to disk (return data only)
 - **FR-005**: Server MUST validate all input parameters before processing

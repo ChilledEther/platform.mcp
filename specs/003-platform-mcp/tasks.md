@@ -21,3 +21,4 @@
 ## Phase 4: Final Validation
 - [x] Perform manual end-to-end test with Claude Desktop <!-- id: 12 -->
 - [x] Verify compliance with Constitution (especially naming and logic location) <!-- id: 13 -->
+- [ ] Task 10: Implement concurrent load test for `generate_workflows` (verify 10+ parallel requests)

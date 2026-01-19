@@ -2,6 +2,7 @@ package templates
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -57,5 +58,65 @@ func TestRender(t *testing.T) {
 	_, err = Render("Hello {{ .Missing }", data)
 	if err == nil {
 		t.Error("Expected error for invalid template syntax, got nil")
+	}
+}
+
+func TestGetManifest(t *testing.T) {
+	manifest, err := GetManifest()
+	if err != nil {
+		t.Fatalf("Expected no error getting manifest, got %v", err)
+	}
+
+	if len(manifest.Templates) == 0 {
+		t.Error("Expected templates in manifest, got none")
+	}
+
+	foundGo := false
+	for _, tmpl := range manifest.Templates {
+		if tmpl.Name == "go-workflow" {
+			foundGo = true
+			break
+		}
+	}
+
+	if !foundGo {
+		t.Error("Expected go-workflow in manifest")
+	}
+}
+
+func TestExternalLoading(t *testing.T) {
+	tmpDir, err := os.MkdirTemp("", "templates-test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	testTmpl := "external.tmpl"
+	content := "external content"
+	if err := os.WriteFile(filepath.Join(tmpDir, testTmpl), []byte(content), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Set external base dir
+	origBaseDir := BaseDir
+	SetBaseDir(tmpDir)
+	defer SetBaseDir(origBaseDir)
+
+	// Test loading external
+	loaded, err := Load(testTmpl)
+	if err != nil {
+		t.Fatalf("Failed to load external template: %v", err)
+	}
+	if loaded != content {
+		t.Errorf("Expected %q, got %q", content, loaded)
+	}
+
+	// Test fallback to embedded
+	embedded, err := Load("go.yaml.tmpl")
+	if err != nil {
+		t.Fatalf("Failed to load embedded template with BaseDir set: %v", err)
+	}
+	if len(embedded) == 0 {
+		t.Error("Expected embedded content, got empty")
 	}
 }

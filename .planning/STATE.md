@@ -33,7 +33,7 @@ Progress: ██████████████████░░ 82%
 | 4 | 1 | 1 | 15 min |
 
 **Recent Trend:**
-- Last 5 plans: 6m, 10m, 15m, 24m, 15m
+- Last 5 plans: 15m, 6m, 10m, 15m, 24m, 15m
 - Trend: Stable
 
 ## Accumulated Context
@@ -43,16 +43,29 @@ Progress: ██████████████████░░ 82%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+| 01 | Used strict TDD cycle for core logic | Establish pattern |
+| 01 | Separated interface definition from implementation | Clean testing |
+| 01 | Used internal/templates for template loading | Centralize resources |
+| 01 | Added feature flags to Config | Conditional generation |
+| 01 | Decoupled template mappings into YAML manifest | Enable dynamic overrides |
+| 02 | Moved generation logic to generate command | Support platform generate usage |
+| 02 | Made flags persistent on generate command | Inheritance for subcommands |
+| 02 | Added .gitignore exception for cmd/platform | Fix ignored source directory |
+| 02 | Reverted template registry logic to Phase 1 manifest-driven pattern | Ensure core-first architecture |
+| 02 | Used ProjectGenerator abstraction | Proper layering |
+| 02 | Added --with-flux flag | FluxCD manifest support |
+| 03 | Used ProjectGenerator in MCP tools | Consistency with CLI |
 | 04 | Moved Dockerfile to build/package/platform-mcp/ | Project standard layout |
 | 04 | Fixed .gitignore pattern to build/* | Enable negation of subdirectories |
 
 ### Deferred Issues
 
-None.
+None yet.
 
 ### Pending Todos
 
 None - Phase 4 complete.
+
 
 ### Blockers/Concerns
 

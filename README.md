@@ -21,7 +21,7 @@ Platform MCP is a comprehensive toolset for infrastructure scaffolding:
 - **[Architecture](./docs/architecture.md)**: Deep dive into the project structure and design principles.
 - **[Feature List](./docs/features.md)**: Detailed breakdown of current capabilities.
 - **[Development Guide](./docs/development.md)**: Workflow, scripts, and testing instructions.
-- **[Specifications](./specs/)**: Technical specs and implementation plans.
+- **[Planning](./.planning/)**: Project roadmap and execution plans.
 
 ---
 
@@ -97,7 +97,7 @@ Based on [golang-standards/project-layout](https://github.com/golang-standards/p
 ├── cmd/                        # Main applications (CLI & MCP)
 ├── pkg/                        # Shared logic and libraries
 ├── internal/                   # Private helpers and templates
-├── specs/                      # Feature specifications
+├── .planning/                  # Project roadmap and plans
 ├── scripts/                    # Automation scripts
 └── build/package/              # Dockerfiles
 ```

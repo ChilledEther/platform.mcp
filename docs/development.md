@@ -4,8 +4,8 @@ This document outlines the development workflow and automation scripts for Platf
 
 ## 🚀 Development Workflow
 
-1. **Specifications First**: Before any code is written, a specification must be created in `specs/###-feature-name/spec.md`.
-2. **Implementation Plan**: Run `/speckit.plan` to generate `plan.md` and related design documents.
+1. **Planning**: Update `.planning/phases/` and ensure the project state is reflected in `.planning/STATE.md`.
+2. **Implementation Plan**: Ensure a clear `PLAN.md` exists for the current task.
 3. **TDD Implementation**: Write tests first in `pkg/` or `cmd/`, then implement the logic.
 4. **Verification**: Run tests locally and in Docker.
 

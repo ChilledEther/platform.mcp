@@ -4,96 +4,53 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 
 ## Core Mandates
 
-- **Architecture**: Shared Core (`pkg/`) + Consumer Applications (`cmd/`).
+- **Architecture**: Core-First. Shared logic in `pkg/`, consumers in `cmd/`.
   - `pkg/`: Pure logic, return data, no side effects (I/O).
-  - `cmd/`: Entry points for applications (CLI, MCP, etc.).
-- **Standards**: All development MUST follow the **Constitution** at `.specify/memory/constitution.md`.
+  - `cmd/`: Application entry points (CLI, MCP server).
 - **TDD**: Red-Green-Refactor is non-negotiable. Write failing tests before implementation.
-- **Dependencies**: Minimal footprint (Constitution VII). Prefer standard lib.
+- **Dependencies**: Minimal footprint. Use Go standard library over third-party packages unless they provide significant value (e.g., `cobra`, `mcp-sdk`).
+- **Standards**: All generated files must be valid, standards-compliant YAML.
 
 ## Development Workflow
 
 ### Build & Run
-
-- **Build Docker**: `./scripts/Invoke-DockerBuild.ps1` (PowerShell)
-- **Add to Catalog**: `./scripts/Add-MCPToCatalog.ps1` (PowerShell)
+- **Build Docker**: `./scripts/Invoke-DockerBuild.ps1`
 - **Run CLI**: `go run cmd/platform/main.go`
 - **Run MCP**: `go run cmd/platform-mcp/main.go`
 
 ### Testing
-
 - **Run All Tests**: `go test ./...`
-- **Single Package**: `go test ./pkg/scaffold/...`
-- **Single Test**: `go test -v -run TestSpecificName ./pkg/scaffold`
+- **Package Tests**: `go test ./pkg/scaffold/...`
 - **Docker Tests**: `./scripts/Test-Docker.ps1`
 
-### Linting & Formatting
-
+### Linting
 - **Format**: `go fmt ./...`
-- **Lint**: `golangci-lint run` (if available)
+- **Lint**: `golangci-lint run`
 
 ## Code Style & Guidelines
 
-### MCP Tool Naming (CONSTITUTION VI)
-
+### MCP Tool Naming
 - **Convention**: `snake_case` using `verb_noun`.
 - **Verbs**: `get`, `create`, `update`, `delete`, `list`, `search`, `analyze`, `generate`, `validate`.
-- **Examples**: `get_firewall_rules`, `list_resources`.
-
-### Minimal Footprint (CONSTITUTION VII)
-
-- **Rule**: Minimize dependencies.
-- **Preference**: Use standard library (`net/http`, `encoding/json`) over external packages where possible.
-- **Justification**: New dependencies must provide significant value (e.g., `cobra`, `mcp-sdk`).
 
 ### Go Implementation
-
-- **Project Layout**: Follows [golang-standards/project-layout](https://github.com/golang-standards/project-layout).
-- **Naming**:
-  - Packages: short, lowercase, single word.
-  - Exported members: PascalCase.
-  - Local variables: camelCase.
-- **Error Handling**:
-  - Return errors as the last value.
-  - Wrap errors with context: `fmt.Errorf("failed to generate scaffold: %w", err)`.
-  - Use `errors.Is` and `errors.As` for checking.
-- **Imports**: Standard library first, then third-party, then internal. Grouped by blank lines.
-
-### TypeScript/Bun (Historical/Future)
-
-- **Runtime**: Always use **Bun**.
-- **Naming**: `kebab-case` for files, `PascalCase` for classes/types, `camelCase` for functions/variables.
-- **Validation**: Use **Zod** for all I/O and MCP tool arguments.
+- **Layout**: Follows [golang-standards/project-layout](https://github.com/golang-standards/project-layout).
+- **Error Handling**: Return errors as the last value. Wrap with context: `fmt.Errorf("failed to do X: %w", err)`.
+- **Templates**: Use Go `embed` package to bundle assets into the binary.
 
 ## Repository Structure
 
-- `/cmd`: Entry points for CLI and MCP binaries.
-- `/pkg`: Shared core logic (importable library).
-- `/internal`: Private code (CLI helpers, MCP registry, templates).
-- `/specs`: Markdown specifications (Source of Truth).
-- `/scripts`: PowerShell (`.ps1`) automation scripts just for local builds and testing.
-- `/build/package`: Multi-stage Alpine-based Dockerfiles.
+- `cmd/`: Entry points for `platform` (CLI) and `platform-mcp` (MCP).
+- `pkg/`: Shared core logic (scaffolding, generators).
+- `internal/`: Private code (templates, registry helpers).
+- `.planning/`: Execution plans, roadmap, and state tracking.
+- `scripts/`: PowerShell automation for local builds/testing.
+- `build/package/`: Dockerfiles for production artifacts.
 
 ## AI Alignment
 
-- **Context**: Read `specs/` before implementation.
-- **Plan**: Use `/speckit.plan` (via Task tool) to generate design before writing code.
-- **Validation**: Ensure all tests pass in Docker.
+- **Context**: Read `.planning/` before starting any phase.
+- **Plan**: Follow `.planning/phases/` sequentially.
+- **Validation**: Ensure all tests pass in Docker before declaring completion.
 
-**Version**: 2.3.0 | **Updated**: 2026-01-19
-
-## Active Technologies
-
-- Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package (001-core-foundation, 002-platform-cli)
-- N/A (Pure functions) (001-core-foundation)
-- MCP Server with `github.com/modelcontextprotocol/go-sdk` (003-platform-mcp)
-- Go 1.25.5 + None (static binary, Alpine runtime) (998-docker-environment)
-- N/A (stateless containers) (998-docker-environment)
-- Go 1.25+ (per constitution) + GitHub Actions, Release Please, Docker Buildx (999-deployment)
-- N/A (GitHub-managed: Releases, Container Registry) (999-deployment)
-
-## Recent Changes
-
-- 002-platform-cli: Generated research, data-model, contracts, and implementation plan for the CLI tool.
-- 001-core-foundation: Added Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package
-- 003-platform-mcp: Initializing MCP server implementation plan and research
+**Version**: 3.0.0 | **Updated**: 2026-01-19

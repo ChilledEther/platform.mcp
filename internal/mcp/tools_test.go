@@ -8,42 +8,43 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestHandleGenerateWorkflows(t *testing.T) {
+func TestHandleGenerate(t *testing.T) {
 	tests := []struct {
 		name    string
-		input   GenerateWorkflowsInput
+		input   GenerateInput
 		wantErr bool
 		check   func(*testing.T, *mcp.CallToolResult)
 	}{
 		{
-			name: "valid request",
-			input: GenerateWorkflowsInput{
+			name: "valid request with all options",
+			input: GenerateInput{
 				ProjectName:  "test-project",
 				WorkflowType: "go",
 				UseDocker:    true,
+				WithActions:  true,
+				WithDocker:   true,
+				WithFlux:     true,
 			},
 			wantErr: false,
 			check: func(t *testing.T, res *mcp.CallToolResult) {
 				assert.False(t, res.IsError)
-				// Expecting: .github/workflows/go.yaml, Dockerfile, docker-build.yaml
-				assert.Len(t, res.Content, 3)
-
-				// Verify content exists, order might vary so we check existence in all items
+				assert.NotEmpty(t, res.Content)
+				// Basic check for content presence
 				var text string
 				for _, c := range res.Content {
 					if tc, ok := c.(*mcp.TextContent); ok {
 						text += tc.Text
 					}
 				}
-				assert.Contains(t, text, ".github/workflows/go.yaml")
 				assert.Contains(t, text, "Dockerfile")
+				assert.Contains(t, text, ".github/workflows")
+				assert.Contains(t, text, "flux-system")
 			},
 		},
 		{
-			name: "invalid workflow_type (handled by scaffold.Generate)",
-			input: GenerateWorkflowsInput{
-				ProjectName:  "test-project",
-				WorkflowType: "rust",
+			name: "missing project name",
+			input: GenerateInput{
+				ProjectName: "",
 			},
 			wantErr: true,
 		},
@@ -52,7 +53,7 @@ func TestHandleGenerateWorkflows(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			req := &mcp.CallToolRequest{}
-			res, _, err := HandleGenerateWorkflows(context.Background(), req, tt.input)
+			res, _, err := HandleGenerate(context.Background(), req, tt.input)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {

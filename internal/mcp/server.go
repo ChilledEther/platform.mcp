@@ -21,4 +21,9 @@ func RegisterTools(server *mcp.Server) {
 		Name:        "generate_workflows",
 		Description: "Generate GitHub Actions workflows for a project",
 	}, HandleGenerateWorkflows)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "generate",
+		Description: "Generate project scaffolding including Actions, Docker, and Flux",
+	}, HandleGenerate)
 }

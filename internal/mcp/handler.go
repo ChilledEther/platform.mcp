@@ -21,6 +21,7 @@ func HandleGenerateWorkflows(ctx context.Context, request *mcp.CallToolRequest, 
 		ProjectName:  input.ProjectName,
 		UseDocker:    input.UseDocker,
 		WorkflowType: input.WorkflowType,
+		WithDocker:   input.UseDocker,
 	}
 
 	files, err := scaffold.Generate(cfg)

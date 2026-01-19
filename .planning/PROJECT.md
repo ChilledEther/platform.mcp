@@ -27,13 +27,14 @@ The core library must generate valid, standards-compliant YAML without side effe
 - [ ] CLI supports `--dry-run`, `--force`, `--output`, `--project-name` flags
 - [ ] MCP server (`platform-mcp`) returns content to AI agents via stdio
 - [ ] MCP tool discovery with parameter schemas
-- [ ] Multi-stage Alpine Docker builds (<50MB images)
+- [ ] Multi-stage Alpine Docker build for MCP server (<50MB image)
 - [ ] GitHub Actions CI/CD pipeline
 - [ ] Release Please automated versioning
 - [ ] Container registry publishing
 
 ### Out of Scope
 
+- Containerization of CLI (distributed as native binary only)
 - Multi-architecture builds (amd64/arm64) — future enhancement after v1
 - HTTP transport for MCP — stdio is primary, HTTP can be added later
 - Additional template types beyond GitHub Actions, Docker, FluxCD — expand after core is solid
@@ -66,6 +67,7 @@ The core library must generate valid, standards-compliant YAML without side effe
 - **TDD**: Red-Green-Refactor workflow required per AGENTS.md
 - **Scripting**: PowerShell for all automation scripts per global standards
 - **Image Size**: Final Docker images must be under 50MB each
+- **Containerization**: Only MCP server is containerized; CLI is native binary
 
 ## Key Decisions
 
@@ -74,6 +76,7 @@ The core library must generate valid, standards-compliant YAML without side effe
 | Shared Core + Consumer pattern | Enables both CLI and MCP to use identical generation logic without duplication | — Pending |
 | Embedded templates via `embed` | Single binary distribution, no external template files needed                  | — Pending |
 | Stdio transport first for MCP  | Primary use case is local MCP clients (Claude Desktop, Cursor)                 | — Pending |
+| CLI Distribution               | Native binary only (no container) to simplify usage and distribution           | — Pending |
 
 ---
 

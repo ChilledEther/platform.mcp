@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-19)
 ## Current Position
 
 Phase: 1 of 5 (Core Foundation)
-Plan: 3 of 3 (Implement Specific Generators)
-Status: Phase complete
-Last activity: 2026-01-19 — Completed 01-03-PLAN.md
+Plan: 4 of 4 (Dynamic Manifest & External Templates)
+Status: In progress
+Last activity: 2026-01-19 — Added external template requirements to Core Foundation
 
 Progress: ██████░░░░░░░░░░░░░░ 30%
 

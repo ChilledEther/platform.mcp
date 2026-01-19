@@ -34,3 +34,28 @@ func TestLoad(t *testing.T) {
 		t.Error("Expected error for missing template, got nil")
 	}
 }
+
+func TestRender(t *testing.T) {
+	type TestData struct {
+		ProjectName string
+	}
+
+	data := TestData{ProjectName: "MyProject"}
+	tmpl := "Hello {{ .ProjectName }}"
+
+	// Test success
+	output, err := Render(tmpl, data)
+	if err != nil {
+		t.Fatalf("Render failed: %v", err)
+	}
+	expected := "Hello MyProject"
+	if output != expected {
+		t.Errorf("Expected %q, got %q", expected, output)
+	}
+
+	// Test invalid template
+	_, err = Render("Hello {{ .Missing }", data)
+	if err == nil {
+		t.Error("Expected error for invalid template syntax, got nil")
+	}
+}

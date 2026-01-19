@@ -17,3 +17,20 @@ func TestTemplatesExist(t *testing.T) {
 		}
 	}
 }
+
+func TestLoad(t *testing.T) {
+	// Test existing template
+	content, err := Load("workflow.yaml.tmpl")
+	if err != nil {
+		t.Fatalf("Expected no error loading workflow.yaml.tmpl, got %v", err)
+	}
+	if len(content) == 0 {
+		t.Error("Expected content, got empty string")
+	}
+
+	// Test missing template
+	_, err = Load("nonexistent.tmpl")
+	if err == nil {
+		t.Error("Expected error for missing template, got nil")
+	}
+}

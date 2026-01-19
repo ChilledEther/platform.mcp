@@ -19,11 +19,11 @@ func FilterTemplates(manifest *templates.Manifest, cfg Config) []templates.Templ
 func ShouldGenerate(condition string, cfg Config) bool {
 	switch condition {
 	case "workflow_go":
-		return cfg.WorkflowType == "go" || cfg.WorkflowType == ""
+		return cfg.WithActions && (cfg.WorkflowType == "go" || cfg.WorkflowType == "")
 	case "workflow_typescript":
-		return cfg.WorkflowType == "typescript" || cfg.WorkflowType == "node"
+		return cfg.WithActions && (cfg.WorkflowType == "typescript" || cfg.WorkflowType == "node")
 	case "workflow_python":
-		return cfg.WorkflowType == "python"
+		return cfg.WithActions && cfg.WorkflowType == "python"
 	case "use_docker":
 		return cfg.UseDocker
 	case "with_docker":

@@ -13,6 +13,7 @@ func TestGenerate_Basic(t *testing.T) {
 	cfg := Config{
 		ProjectName:  "test-project",
 		WorkflowType: "go",
+		WithActions:  true, // Required to generate workflow files
 	}
 
 	files, err := Generate(cfg)
@@ -54,6 +55,7 @@ func TestGenerate_Table(t *testing.T) {
 			cfg: Config{
 				ProjectName:  "go-app",
 				WorkflowType: "go",
+				WithActions:  true, // Required to generate workflow files
 			},
 			expectedPath: ".github/workflows/go.yaml",
 			expectExist:  true,
@@ -81,6 +83,7 @@ func TestGenerate_Table(t *testing.T) {
 			cfg: Config{
 				ProjectName:  "ts-app",
 				WorkflowType: "typescript",
+				WithActions:  true, // Required to generate workflow files
 			},
 			expectedPath: ".github/workflows/typescript.yaml",
 			expectExist:  true,
@@ -179,6 +182,7 @@ templates:
 	cfg := Config{
 		ProjectName:  "external-test",
 		WorkflowType: "go",
+		WithActions:  true, // Required for workflow_go condition
 	}
 
 	files, err := Generate(cfg)

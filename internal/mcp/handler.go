@@ -22,6 +22,7 @@ func HandleGenerateWorkflows(ctx context.Context, request *mcp.CallToolRequest, 
 		UseDocker:    input.UseDocker,
 		WorkflowType: input.WorkflowType,
 		WithDocker:   input.UseDocker,
+		WithActions:  true, // generate_workflows tool always generates workflows
 	}
 
 	files, err := scaffold.Generate(cfg)

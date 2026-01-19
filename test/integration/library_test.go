@@ -12,6 +12,7 @@ func TestLibrary_FullFlow(t *testing.T) {
 		ProjectName:  "integration-test",
 		UseDocker:    true,
 		WorkflowType: "go",
+		WithActions:  true, // Required to generate workflow files
 	}
 
 	files, err := scaffold.Generate(cfg)

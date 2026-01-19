@@ -88,9 +88,8 @@ var workflowsCmd = &cobra.Command{
 	Use:   "workflows",
 	Short: "Generate GitHub Actions workflow files",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// Delegate to generate command logic or keep independent?
-		// For now, let's keep independent but using same flags to avoid breaking changes if any
-		// But since we moved flags to Persistent on generate, they are available here.
+		// The "workflows" subcommand implies --with-actions
+		withActions = true
 
 		// Map legacy useDocker flag if needed
 		return generateCmd.RunE(cmd, args)

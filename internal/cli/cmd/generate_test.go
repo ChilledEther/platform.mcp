@@ -70,7 +70,6 @@ func TestGenerateCommand(t *testing.T) {
 			wantErr: false,
 			expectedFiles: []string{
 				"fluxcd.yaml",
-				".github/workflows/go.yaml",
 			},
 		},
 	}

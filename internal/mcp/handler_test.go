@@ -25,8 +25,9 @@ func TestHandleGenerateWorkflows(t *testing.T) {
 			wantErr: false,
 			check: func(t *testing.T, res *mcp.CallToolResult) {
 				assert.False(t, res.IsError)
-				// Expecting: .github/workflows/go.yaml, Dockerfile, docker-build.yaml
-				assert.Len(t, res.Content, 3)
+				// Expecting: ci.yaml (with_actions), go.yaml (workflow_go), Dockerfile, docker-build.yaml
+				// Note: generate_workflows implicitly sets WithActions=true
+				assert.Len(t, res.Content, 4)
 
 				// Verify content exists, order might vary so we check existence in all items
 				var text string

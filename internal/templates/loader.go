@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-//go:embed *.tmpl templates.yaml
+//go:embed *.tmpl manifest.yaml
 var FS embed.FS
 
 // BaseDir is the directory to check for external templates.
@@ -56,13 +56,13 @@ func GetManifest() (*Manifest, error) {
 	var err error
 
 	if BaseDir != "" {
-		content, err = os.ReadFile(filepath.Join(BaseDir, "templates.yaml"))
+		content, err = os.ReadFile(filepath.Join(BaseDir, "manifest.yaml"))
 	}
 
 	if content == nil {
-		content, err = FS.ReadFile("templates.yaml")
+		content, err = FS.ReadFile("manifest.yaml")
 		if err != nil {
-			return nil, fmt.Errorf("failed to read templates.yaml: %w", err)
+			return nil, fmt.Errorf("failed to read manifest.yaml: %w", err)
 		}
 	}
 

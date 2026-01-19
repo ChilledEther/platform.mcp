@@ -72,19 +72,3 @@ func GetManifest() (*Manifest, error) {
 	}
 	return &m, nil
 }
-
-// FindTemplate looks up a template mapping by name from the manifest.
-func FindTemplate(name string) (*TemplateMapping, error) {
-	m, err := GetManifest()
-	if err != nil {
-		return nil, err
-	}
-
-	for _, t := range m.Templates {
-		if t.Name == name {
-			return &t, nil
-		}
-	}
-
-	return nil, fmt.Errorf("template not found: %s", name)
-}

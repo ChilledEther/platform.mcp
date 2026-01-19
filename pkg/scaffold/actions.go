@@ -2,9 +2,6 @@ package scaffold
 
 import (
 	"embed"
-	"fmt"
-
-	"github.com/modelcontextprotocol/platform.mcp/internal/templates"
 )
 
 // ActionsGenerator generates GitHub Actions workflows
@@ -18,29 +15,11 @@ type ActionsGenerator struct {
 var _ Generator = (*ActionsGenerator)(nil)
 
 func (g *ActionsGenerator) Generate(cfg Config) ([]File, error) {
-	if err := cfg.Validate(); err != nil {
-		return nil, err
-	}
+	// Use the manifest-driven generator but ensure only Actions are generated
+	limitedCfg := cfg
+	limitedCfg.WithActions = true
+	limitedCfg.WithDocker = false
+	limitedCfg.WithFlux = false
 
-	tmpl, err := templates.FindTemplate("actions-workflow")
-	if err != nil {
-		return nil, fmt.Errorf("failed to find template: %w", err)
-	}
-
-	tmplContent, err := templates.Load(tmpl.Source)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load template: %w", err)
-	}
-
-	content, err := templates.Render(tmplContent, cfg)
-	if err != nil {
-		return nil, fmt.Errorf("failed to render template: %w", err)
-	}
-
-	return []File{
-		{
-			Path:    tmpl.Target,
-			Content: content,
-		},
-	}, nil
+	return Generate(limitedCfg)
 }

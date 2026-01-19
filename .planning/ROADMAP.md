@@ -11,7 +11,7 @@ None
 ## Phases
 
 - [x] **Phase 1: Core Foundation** - Implement pure Go generation logic (`pkg/scaffold`) with dynamic, manifest-driven templates.
-- [ ] **Phase 2: Platform CLI** - Build `platform-cli` with Cobra, wiring up core logic to disk I/O.
+- [ ] **Phase 2: Platform CLI** - Build `platform-cli` with Cobra, wiring up core logic to disk I/O. (In progress)
 - [x] **Phase 3: Platform MCP** - Build `platform-mcp` with `go-sdk`, exposing generation as MCP tools.
 - [ ] **Phase 4: Docker Environment** - Create optimized multi-stage Alpine Dockerfile for the MCP server.
 - [ ] **Phase 5: Deployment Pipeline** - Set up GitHub Actions, Release Please, and container publishing.
@@ -35,12 +35,10 @@ Plans:
 **Depends on**: Phase 1
 **Research**: Unlikely (Cobra is standard, I/O patterns established)
 **Plans**: 2 plans
-**Notes**:
-- [ ] Incorporate "Externalize template configuration" todo into CLI generation logic.
 
 Plans:
 - [x] 02-01: CLI Skeleton & I/O - Set up Cobra and file writing utilities.
-- [ ] 02-02: Wiring Commands - Connect CLI commands to core generation logic.
+- [ ] 02-02: Wiring Commands - Connect CLI commands to core generation logic. (In progress)
 
 ### Phase 3: Platform MCP
 **Goal**: Build `platform-mcp` with `go-sdk`, exposing generation as MCP tools.

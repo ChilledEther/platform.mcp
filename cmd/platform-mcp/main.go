@@ -20,19 +20,10 @@ func run() error {
 	ctx := context.Background()
 
 	// 1. Initialize MCP server
-	server := mcp.NewServer(
-		&mcp.Implementation{
-			Name:    "platform-mcp",
-			Version: "0.1.0",
-		},
-		nil,
-	)
+	server := internalmcp.NewServer("0.1.0")
 
 	// 2. Register tools
-	mcp.AddTool(server, &mcp.Tool{
-		Name:        "generate_workflows",
-		Description: "Generate GitHub Actions workflows for a project",
-	}, internalmcp.HandleGenerateWorkflows)
+	internalmcp.RegisterTools(server)
 
 	// 3. Start server with stdio transport
 	fmt.Fprintf(os.Stderr, "platform-mcp server starting...\n")

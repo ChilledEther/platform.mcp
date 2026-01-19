@@ -62,7 +62,7 @@ func TestGenerate_Table(t *testing.T) {
 			name: "Docker Enabled",
 			cfg: Config{
 				ProjectName: "docker-app",
-				UseDocker:   true,
+				WithDocker:  true,
 			},
 			expectedPath: "Dockerfile",
 			expectExist:  true,
@@ -71,7 +71,7 @@ func TestGenerate_Table(t *testing.T) {
 			name: "Docker Disabled",
 			cfg: Config{
 				ProjectName: "no-docker-app",
-				UseDocker:   false,
+				WithDocker:  false,
 			},
 			expectedPath: "Dockerfile",
 			expectExist:  false,
@@ -164,7 +164,7 @@ templates:
     target: "custom.txt"
     condition: "workflow_go"
 `
-	if err := os.WriteFile(filepath.Join(tmpDir, "manifest.yaml"), []byte(customManifest), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(tmpDir, "templates.yaml"), []byte(customManifest), 0644); err != nil {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(tmpDir, "custom.tmpl"), []byte("custom content for {{ .ProjectName }}"), 0644); err != nil {

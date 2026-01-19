@@ -20,7 +20,11 @@ func (g *DockerGenerator) Generate(cfg Config) ([]File, error) {
 	files := []File{}
 
 	// Dockerfile
-	dockerTmpl, err := templates.Load("Dockerfile.tmpl")
+	dockerTmplInfo, err := templates.FindTemplate("dockerfile")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find Dockerfile template: %w", err)
+	}
+	dockerTmpl, err := templates.Load(dockerTmplInfo.Source)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load Dockerfile template: %w", err)
 	}
@@ -29,12 +33,16 @@ func (g *DockerGenerator) Generate(cfg Config) ([]File, error) {
 		return nil, fmt.Errorf("failed to render Dockerfile: %w", err)
 	}
 	files = append(files, File{
-		Path:    "Dockerfile",
+		Path:    dockerTmplInfo.Target,
 		Content: dockerContent,
 	})
 
 	// docker-build.yaml
-	buildTmpl, err := templates.Load("docker-build.yaml.tmpl")
+	buildTmplInfo, err := templates.FindTemplate("docker-build")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find docker-build template: %w", err)
+	}
+	buildTmpl, err := templates.Load(buildTmplInfo.Source)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load docker-build template: %w", err)
 	}
@@ -43,7 +51,7 @@ func (g *DockerGenerator) Generate(cfg Config) ([]File, error) {
 		return nil, fmt.Errorf("failed to render docker-build: %w", err)
 	}
 	files = append(files, File{
-		Path:    "docker-build.yaml",
+		Path:    buildTmplInfo.Target,
 		Content: buildContent,
 	})
 

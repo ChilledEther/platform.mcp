@@ -17,7 +17,12 @@ func (g *FluxGenerator) Generate(cfg Config) ([]File, error) {
 		return nil, err
 	}
 
-	tmplContent, err := templates.Load("fluxcd.yaml.tmpl")
+	tmpl, err := templates.FindTemplate("flux-manifest")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find flux template: %w", err)
+	}
+
+	tmplContent, err := templates.Load(tmpl.Source)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load fluxcd template: %w", err)
 	}
@@ -29,7 +34,7 @@ func (g *FluxGenerator) Generate(cfg Config) ([]File, error) {
 
 	return []File{
 		{
-			Path:    "fluxcd.yaml",
+			Path:    tmpl.Target,
 			Content: content,
 		},
 	}, nil

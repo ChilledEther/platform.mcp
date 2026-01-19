@@ -22,7 +22,12 @@ func (g *ActionsGenerator) Generate(cfg Config) ([]File, error) {
 		return nil, err
 	}
 
-	tmplContent, err := templates.Load("workflow.yaml.tmpl")
+	tmpl, err := templates.FindTemplate("actions-workflow")
+	if err != nil {
+		return nil, fmt.Errorf("failed to find template: %w", err)
+	}
+
+	tmplContent, err := templates.Load(tmpl.Source)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load template: %w", err)
 	}
@@ -34,7 +39,7 @@ func (g *ActionsGenerator) Generate(cfg Config) ([]File, error) {
 
 	return []File{
 		{
-			Path:    ".github/workflows/ci.yaml",
+			Path:    tmpl.Target,
 			Content: content,
 		},
 	}, nil

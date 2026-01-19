@@ -1,6 +1,11 @@
 package scaffold
 
-import "embed"
+import (
+	"embed"
+	"fmt"
+
+	"github.com/helper-j/platform.mcp/internal/templates"
+)
 
 // ActionsGenerator generates GitHub Actions workflows
 type ActionsGenerator struct {
@@ -13,6 +18,24 @@ type ActionsGenerator struct {
 var _ Generator = (*ActionsGenerator)(nil)
 
 func (g *ActionsGenerator) Generate(cfg Config) ([]File, error) {
-	// TODO: Implement
-	return nil, nil
+	if err := cfg.Validate(); err != nil {
+		return nil, err
+	}
+
+	tmplContent, err := templates.Load("workflow.yaml.tmpl")
+	if err != nil {
+		return nil, fmt.Errorf("failed to load template: %w", err)
+	}
+
+	content, err := templates.Render(tmplContent, cfg)
+	if err != nil {
+		return nil, fmt.Errorf("failed to render template: %w", err)
+	}
+
+	return []File{
+		{
+			Path:    ".github/workflows/ci.yaml",
+			Content: content,
+		},
+	}, nil
 }

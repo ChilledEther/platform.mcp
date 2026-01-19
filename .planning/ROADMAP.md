@@ -39,7 +39,7 @@ Plans:
 - [ ] Incorporate "Externalize template configuration" todo into CLI generation logic.
 
 Plans:
-- [ ] 02-01: CLI Skeleton & I/O - Set up Cobra and file writing utilities.
+- [x] 02-01: CLI Skeleton & I/O - Set up Cobra and file writing utilities.
 - [ ] 02-02: Wiring Commands - Connect CLI commands to core generation logic.
 
 ### Phase 3: Platform MCP
@@ -80,7 +80,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core Foundation | 4/4 | Complete | 2026-01-19 |
-| 2. Platform CLI | 0/2 | Not started | - |
+| 2. Platform CLI | 1/2 | In progress | - |
 | 3. Platform MCP | 0/2 | Not started | - |
 | 4. Docker Environment | 0/1 | Not started | - |
 | 5. Deployment Pipeline | 0/2 | Not started | - |

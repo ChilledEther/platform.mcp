@@ -15,6 +15,7 @@ var (
 	useDocker    bool
 	withDocker   bool
 	withActions  bool
+	withFlux     bool
 	workflowType string
 	dryRun       bool
 	force        bool
@@ -30,6 +31,7 @@ var generateCmd = &cobra.Command{
 			UseDocker:    withDocker || useDocker, // Support both for now
 			WithDocker:   withDocker,
 			WithActions:  withActions,
+			WithFlux:     withFlux,
 			WorkflowType: workflowType,
 		}
 
@@ -38,7 +40,9 @@ var generateCmd = &cobra.Command{
 			cfg.ProjectName = filepath.Base(dir)
 		}
 
-		files, err := scaffold.Generate(cfg)
+		// Use ProjectGenerator for multi-component scaffolding
+		gen := scaffold.NewProjectGenerator()
+		files, err := gen.Generate(cfg)
 		if err != nil {
 			return fmt.Errorf("failed to generate scaffold: %w", err)
 		}
@@ -112,6 +116,7 @@ func init() {
 	// Generate specific flags
 	generateCmd.Flags().BoolVar(&withDocker, "with-docker", false, "Include Dockerfile")
 	generateCmd.Flags().BoolVar(&withActions, "with-actions", false, "Include GitHub Actions")
+	generateCmd.Flags().BoolVar(&withFlux, "with-flux", false, "Include FluxCD manifests")
 
 	// Legacy flags for workflows command (aliased or hidden if needed)
 	// Since workflows inherits persistent flags, we don't need to re-add them.

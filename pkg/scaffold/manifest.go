@@ -27,7 +27,7 @@ func ShouldGenerate(condition string, cfg Config) bool {
 	case "use_docker":
 		return cfg.UseDocker
 	case "with_docker":
-		return cfg.WithDocker
+		return cfg.WithDocker || cfg.UseDocker
 	case "with_flux":
 		return cfg.WithFlux
 	case "with_actions":

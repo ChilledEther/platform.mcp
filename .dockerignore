@@ -1,29 +1,29 @@
-# Dependencies
-node_modules/
-bun.lockb
-
-# Build output
-dist/
-build/
-
-# Test files
-tests/
-*.test.ts
-
-# Development files
-*.md
+# Git and development
 .git/
 .gitignore
 .vscode/
 .idea/
 
-# Legacy Go code (not needed in container)
-legacy/
-
-# Spec files
+# Documentation and planning
+*.md
 .planning/
 .gemini/
+docs/
 
-# Environment
+# Test files (Go tests are run in build stage, not needed in final image)
+test/
+*_test.go
+
+# Scripts (not needed in container)
+scripts/
+
+# Environment files
 .env
 .env.*
+
+# Build artifacts (from local builds)
+dist/
+
+# Node/JS artifacts (if any exist from legacy)
+node_modules/
+bun.lockb

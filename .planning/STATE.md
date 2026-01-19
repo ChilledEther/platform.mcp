@@ -5,33 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-01-19)
 
 **Core value:** The core library must generate valid, standards-compliant YAML without side effects.
-**Current focus:** Phase 1 — Core Foundation
+**Current focus:** Phase 2 — Platform CLI
 
 ## Current Position
 
-Phase: 1 of 5 (Core Foundation)
-Plan: 4 of 4 (Dynamic Manifest & External Templates)
-Status: In progress
-Last activity: 2026-01-19 — Added external template requirements to Core Foundation
+Phase: 2 of 5 (Platform CLI)
+Plan: 0 of 2 in current phase
+Status: Ready to execute
+Last activity: 2026-01-19 — Completed 01-04-PLAN.md (Phase 1 complete)
 
-Progress: ██████░░░░░░░░░░░░░░ 30%
+Progress: ████████░░░░░░░░░░░░ 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 9 min
-- Total execution time: 0.45 hours
+- Total plans completed: 4
+- Average duration: 10.5 min
+- Total execution time: 0.7 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 | 3 | 3 | 9 min |
+| 1 | 4 | 4 | 10.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 6m, 10m, ...
-- Trend: Improving
+- Last 5 plans: 6m, 10m, 15m
+- Trend: Stable
 
 ## Accumulated Context
 
@@ -44,6 +44,7 @@ Recent decisions affecting current work:
 | 01 | Separated interface definition from implementation | Clean testing |
 | 01 | Used internal/templates for template loading | Centralize resources |
 | 01 | Added feature flags to Config | Conditional generation |
+| 01 | Decoupled template mappings into YAML manifest | Enable dynamic overrides |
 
 ### Deferred Issues
 
@@ -51,7 +52,7 @@ None yet.
 
 ### Pending Todos
 
-1. Externalize template configuration
+1. Implement CLI commands using manifest-driven scaffold.
 
 
 ### Blockers/Concerns
@@ -61,5 +62,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-01-19
-Stopped at: Completed 01-03-PLAN.md
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None

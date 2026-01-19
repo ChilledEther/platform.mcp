@@ -14,46 +14,53 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 ## Development Workflow
 
 ### Build & Run
+
 - **Build Docker**: `./scripts/Invoke-DockerBuild.ps1` (PowerShell)
 - **Add to Catalog**: `./scripts/Add-MCPToCatalog.ps1` (PowerShell)
 - **Run CLI**: `go run cmd/platform/main.go`
 - **Run MCP**: `go run cmd/platform-mcp/main.go`
 
 ### Testing
+
 - **Run All Tests**: `go test ./...`
 - **Single Package**: `go test ./pkg/scaffold/...`
 - **Single Test**: `go test -v -run TestSpecificName ./pkg/scaffold`
 - **Docker Tests**: `./scripts/Test-Docker.ps1`
 
 ### Linting & Formatting
+
 - **Format**: `go fmt ./...`
 - **Lint**: `golangci-lint run` (if available)
 
 ## Code Style & Guidelines
 
 ### MCP Tool Naming (CONSTITUTION VI)
+
 - **Convention**: `snake_case` using `verb_noun`.
 - **Verbs**: `get`, `create`, `update`, `delete`, `list`, `search`, `analyze`, `generate`, `validate`.
 - **Examples**: `get_firewall_rules`, `list_resources`.
 
 ### Minimal Footprint (CONSTITUTION VII)
+
 - **Rule**: Minimize dependencies.
 - **Preference**: Use standard library (`net/http`, `encoding/json`) over external packages where possible.
 - **Justification**: New dependencies must provide significant value (e.g., `cobra`, `mcp-sdk`).
 
 ### Go Implementation
+
 - **Project Layout**: Follows [golang-standards/project-layout](https://github.com/golang-standards/project-layout).
-- **Naming**: 
+- **Naming**:
   - Packages: short, lowercase, single word.
   - Exported members: PascalCase.
   - Local variables: camelCase.
-- **Error Handling**: 
+- **Error Handling**:
   - Return errors as the last value.
   - Wrap errors with context: `fmt.Errorf("failed to generate scaffold: %w", err)`.
   - Use `errors.Is` and `errors.As` for checking.
 - **Imports**: Standard library first, then third-party, then internal. Grouped by blank lines.
 
 ### TypeScript/Bun (Historical/Future)
+
 - **Runtime**: Always use **Bun**.
 - **Naming**: `kebab-case` for files, `PascalCase` for classes/types, `camelCase` for functions/variables.
 - **Validation**: Use **Zod** for all I/O and MCP tool arguments.
@@ -64,7 +71,7 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - `/pkg`: Shared core logic (importable library).
 - `/internal`: Private code (CLI helpers, MCP registry, templates).
 - `/specs`: Markdown specifications (Source of Truth).
-- `/scripts`: PowerShell (`.ps1`) automation scripts.
+- `/scripts`: PowerShell (`.ps1`) automation scripts just for local builds and testing.
 - `/build/package`: Multi-stage Alpine-based Dockerfiles.
 
 ## AI Alignment
@@ -76,6 +83,7 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 **Version**: 2.3.0 | **Updated**: 2026-01-17
 
 ## Active Technologies
+
 - Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package (001-core-foundation, 002-platform-cli)
 - N/A (Pure functions) (001-core-foundation)
 - MCP Server with `github.com/modelcontextprotocol/go-sdk` (003-platform-mcp)
@@ -85,6 +93,7 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - N/A (GitHub-managed: Releases, Container Registry) (999-deployment)
 
 ## Recent Changes
+
 - 002-platform-cli: Generated research, data-model, contracts, and implementation plan for the CLI tool.
 - 001-core-foundation: Added Go 1.25+ + `github.com/spf13/cobra` (CLI), `github.com/modelcontextprotocol/go-sdk` (MCP), Go `embed` package
 - 003-platform-mcp: Initializing MCP server implementation plan and research

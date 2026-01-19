@@ -10,7 +10,7 @@ None
 
 ## Phases
 
-- [ ] **Phase 1: Core Foundation** - Implement pure Go generation logic (`pkg/scaffold`) with embedded templates and TDD.
+- [x] **Phase 1: Core Foundation** - Implement pure Go generation logic (`pkg/scaffold`) with embedded templates and TDD.
 - [ ] **Phase 2: Platform CLI** - Build `platform-cli` with Cobra, wiring up core logic to disk I/O.
 - [ ] **Phase 3: Platform MCP** - Build `platform-mcp` with `go-sdk`, exposing generation as MCP tools.
 - [ ] **Phase 4: Docker Environment** - Create optimized multi-stage Alpine Dockerfiles for both binaries.
@@ -25,7 +25,7 @@ None
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Implement Core Logic (TDD) - Create types, config, and pure generation logic.
+- [x] 01-01: Implement Core Logic (TDD) - Create types, config, and pure generation logic.
 - [ ] 01-02: Embed Templates - Add Go `embed` support and template parsing.
 - [ ] 01-03: Implement Specific Generators - Add logic for Actions, Docker, and FluxCD files.
 
@@ -76,7 +76,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core Foundation | 0/3 | Not started | - |
+| 1. Core Foundation | 1/3 | In progress | - |
 | 2. Platform CLI | 0/2 | Not started | - |
 | 3. Platform MCP | 0/2 | Not started | - |
 | 4. Docker Environment | 0/1 | Not started | - |

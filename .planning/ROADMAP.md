@@ -34,6 +34,8 @@ Plans:
 **Depends on**: Phase 1
 **Research**: Unlikely (Cobra is standard, I/O patterns established)
 **Plans**: 2 plans
+**Notes**:
+- [ ] Incorporate "Externalize template configuration" todo into CLI generation logic.
 
 Plans:
 - [ ] 02-01: CLI Skeleton & I/O - Set up Cobra and file writing utilities.

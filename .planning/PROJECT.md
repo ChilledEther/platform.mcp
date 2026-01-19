@@ -57,7 +57,7 @@ The core library must generate valid, standards-compliant YAML without side effe
 
 **Existing State**:
 
-- Specs completed via SpecKit (5 feature specs in `specs/`)
+- Specs completed and migrated to `.planning/`
 - Empty `cmd/` directory structure
 - README.md contains stale content (references non-existent TypeScript implementation) — needs cleanup
 

@@ -6,7 +6,7 @@ Implement the pure Go core library (`pkg/scaffold`) that handles all file genera
 ## Existing State
 - **Repo:** `.git` exists.
 - **Code:** No existing code in `pkg/` or `internal/` found (clean slate).
-- **Specs:** `specs/001-core-foundation/spec.md` defines requirements.
+- **Specs:** `.planning/PROJECT.md` defines requirements.
 - **Constraints:**
   - Go 1.25+
   - `embed` package for templates

@@ -24,7 +24,7 @@ Platform MCP follows a **Core-First Architecture** to ensure consistency across 
 ├── internal/                   # Private code
 │   └── templates/              # Embedded templates
 │
-├── specs/                      # Feature specifications (Source of Truth)
+├── .planning/                  # Project planning and specs
 ├── docs/                       # Human-oriented documentation
 ├── scripts/                    # Automation and build scripts
 └── build/package/              # Dockerfiles

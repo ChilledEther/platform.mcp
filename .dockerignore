@@ -21,8 +21,7 @@ tests/
 legacy/
 
 # Spec files
-specs/
-.specify/
+.planning/
 .gemini/
 
 # Environment

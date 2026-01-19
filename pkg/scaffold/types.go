@@ -11,6 +11,9 @@ type File struct {
 // Config holds the configuration for the scaffold generation
 type Config struct {
 	ProjectName string
+	WithActions bool
+	WithDocker  bool
+	WithFlux    bool
 }
 
 // Validate checks if the configuration is valid

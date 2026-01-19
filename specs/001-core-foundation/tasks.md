@@ -100,6 +100,8 @@
 - [X] T022 [P] Add golangci-lint check to CI pipeline
 - [X] T023 Verify 100% test coverage for public API
 - [X] T024 Validate against quickstart.md instructions
+- [X] T025 [P] Create benchmark suite in pkg/scaffold/scaffold_bench_test.go (Target: <100ms)
+- [X] T026 [P] Add schema validation test for generated workflows (ensure valid YAML)
 
 ---
 

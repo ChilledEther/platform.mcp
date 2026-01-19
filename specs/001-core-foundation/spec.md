@@ -76,7 +76,10 @@ As a developer, I need templates bundled within the library binary, so that cons
 ### Key Entities
 
 - **File**: Represents a generated file with path, content, and permissions. Used by consumers to write to disk or return to agents.
-- **Config**: Represents generation options (project name, features enabled, workflow type). Validated before use.
+- **Config**: Represents generation options. Validated before use.
+  - `ProjectName` (string): Required. Name of the project.
+  - `UseDocker` (bool): If true, generates Dockerfile and docker-publish workflow.
+  - `WorkflowType` (string): Workflow template to use. Values: `standard` (Go test/lint), `docker` (build+push), `minimal` (simple check).
 - **Generator**: Interface for feature modules to implement, enabling extensibility.
 
 ## Success Criteria *(mandatory)*

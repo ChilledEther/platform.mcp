@@ -125,7 +125,6 @@ The following technologies are mandated for the Go implementation:
 | Testing            | `go test` with table-driven tests                              | TDD mandatory                                 |
 | Containerization   | Docker (Alpine-based)                                          | Multi-stage builds                            |
 | Config Format      | YAML                                                           | All generated files (`.github/` workflows)    |
-| Scripts            | Bash (`.sh`)                                                   | Standard                                      |
 | Release Automation | [Release Please](https://github.com/googleapis/release-please) | Automated versioning via Conventional Commits |
 
 ### Release Please Configuration

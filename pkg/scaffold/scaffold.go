@@ -1,9 +1,7 @@
 package scaffold
 
 import (
-	"bytes"
 	"fmt"
-	"text/template"
 
 	"github.com/modelcontextprotocol/platform.mcp/internal/templates"
 )
@@ -14,43 +12,28 @@ func Generate(cfg Config) ([]File, error) {
 		return nil, err
 	}
 
+	manifest, err := templates.GetManifest()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get template manifest: %w", err)
+	}
+
+	mappings := FilterTemplates(manifest, cfg)
+
 	var files []File
-
-	// Workflow generation
-	wtype := cfg.WorkflowType
-	if wtype == "" {
-		wtype = "go"
-	}
-	// Alias node -> typescript
-	if wtype == "node" {
-		wtype = "typescript"
-	}
-
-	tmplName := fmt.Sprintf("%s.yaml.tmpl", wtype)
-	tmplContent, err := templates.FS.ReadFile(tmplName)
-	if err == nil {
-		tmpl, err := template.New(wtype).Parse(string(tmplContent))
+	for _, mapping := range mappings {
+		tmplContent, err := templates.Load(mapping.Source)
 		if err != nil {
-			return nil, fmt.Errorf("failed to parse template: %w", err)
+			return nil, fmt.Errorf("failed to load template %s: %w", mapping.Source, err)
 		}
 
-		var buf bytes.Buffer
-		if err := tmpl.Execute(&buf, cfg); err != nil {
-			return nil, fmt.Errorf("failed to execute template: %w", err)
+		rendered, err := templates.Render(tmplContent, cfg)
+		if err != nil {
+			return nil, fmt.Errorf("failed to render template %s: %w", mapping.Name, err)
 		}
 
 		files = append(files, File{
-			Path:    fmt.Sprintf(".github/workflows/%s.yaml", wtype),
-			Content: buf.String(),
-			Mode:    0644,
-		})
-	}
-
-	// Dockerfile generation
-	if cfg.UseDocker {
-		files = append(files, File{
-			Path:    "Dockerfile",
-			Content: fmt.Sprintf("FROM alpine:latest\nLABEL project=%s\nCMD [\"echo\", \"Hello from %s\"]", cfg.ProjectName, cfg.ProjectName),
+			Path:    mapping.Target,
+			Content: rendered,
 			Mode:    0644,
 		})
 	}

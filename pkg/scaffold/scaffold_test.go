@@ -2,8 +2,11 @@ package scaffold
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/modelcontextprotocol/platform.mcp/internal/templates"
 )
 
 func TestGenerate_Basic(t *testing.T) {
@@ -143,5 +146,58 @@ func TestGenerate_NoSideEffects(t *testing.T) {
 	_, err = os.Stat(".github")
 	if !os.IsNotExist(err) {
 		t.Error("Generate created .github directory (side effect detected)")
+	}
+}
+
+func TestGenerate_ExternalTemplates(t *testing.T) {
+	tmpDir, err := os.MkdirTemp("", "scaffold-test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	// Create custom manifest and template
+	customManifest := `
+templates:
+  - name: "custom"
+    source: "custom.tmpl"
+    target: "custom.txt"
+    condition: "workflow_go"
+`
+	if err := os.WriteFile(filepath.Join(tmpDir, "manifest.yaml"), []byte(customManifest), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(tmpDir, "custom.tmpl"), []byte("custom content for {{ .ProjectName }}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Set base dir
+	origBaseDir := templates.BaseDir
+	templates.SetBaseDir(tmpDir)
+	defer templates.SetBaseDir(origBaseDir)
+
+	cfg := Config{
+		ProjectName:  "external-test",
+		WorkflowType: "go",
+	}
+
+	files, err := Generate(cfg)
+	if err != nil {
+		t.Fatalf("Generate with external templates failed: %v", err)
+	}
+
+	found := false
+	for _, f := range files {
+		if f.Path == "custom.txt" {
+			found = true
+			if f.Content != "custom content for external-test" {
+				t.Errorf("Expected custom content, got %q", f.Content)
+			}
+			break
+		}
+	}
+
+	if !found {
+		t.Error("Custom template not generated from external directory")
 	}
 }

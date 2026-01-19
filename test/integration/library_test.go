@@ -38,7 +38,7 @@ func TestLibrary_FullFlow(t *testing.T) {
 	for _, f := range files {
 		if f.Path == "Dockerfile" {
 			foundDocker = true
-			if !strings.Contains(f.Content, "project=integration-test") {
+			if !strings.Contains(f.Content, "cmd/integration-test/main.go") {
 				t.Errorf("Dockerfile content missing project name, got: %s", f.Content)
 			}
 		}

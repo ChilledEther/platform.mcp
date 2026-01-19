@@ -1,9 +1,15 @@
 # Research: Core Foundation Library
 
 ## Go Version Compatibility
+<<<<<<< HEAD
 - **Decision**: Target Go 1.25+.
 - **Rationale**: Mandated by Constitution. 1.25 is required for the project.
 - **Alternatives considered**: None (Constitution mandate).
+=======
+- **Decision**: Target Go 1.23+ for now, unless 1.25 provides critical features.
+- **Rationale**: Go 1.25 is not yet the standard stable release in many environments. 1.23/1.24 provide necessary `embed` and library support.
+- **Alternatives considered**: Using older versions, but `go:embed` requires 1.16+ and modern SDKs prefer 1.21+.
+>>>>>>> 001-core-foundation
 
 ## MCP Go SDK Patterns
 - **Decision**: Use `mcp.NewServer` and `mcp.Tool` for tool registration.

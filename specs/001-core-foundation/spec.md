@@ -1,8 +1,8 @@
 # Feature Specification: Core Foundation Library
 
-**Feature Branch**: `001-core-foundation`  
-**Created**: 2026-01-17  
-**Status**: Draft  
+**Feature Branch**: `001-core-foundation`
+**Created**: 2026-01-17
+**Status**: Draft
 **Input**: User description: "Core shared library (pkg/) that provides file generation logic for GitHub Actions workflows"
 
 ## User Scenarios & Testing *(mandatory)*
@@ -54,11 +54,41 @@ As a developer, I need templates bundled within the library binary, so that cons
 
 ---
 
+### User Story 4 - Generate Standard Configuration Files (Priority: P1)
+
+As a Platform Engineer, I want to generate Docker build and FluxCD configuration files using standardized templates so that my services follow best practices and consistent deployment patterns.
+
+**Why this priority**: Essential for ensuring that all new services created with the platform comply with infrastructure standards (Docker and GitOps/Flux).
+
+**Independent Test**: Can be tested by running the scaffold/generation command and verifying the output matches the expected structure defined in the templates.
+
+**Acceptance Scenarios**:
+
+1. **Given** the platform tool is installed, **When** I run the command to scaffold a Docker build file, **Then** a `docker-build.yaml` file is created in the target directory with content matching `docker-build.yaml.tmpl`.
+2. **Given** the platform tool is installed, **When** I run the command to scaffold a FluxCD configuration, **Then** a `fluxcd.yaml` file is created in the target directory with content matching `fluxcd.yaml.tmpl`.
+
+---
+
+### User Story 5 - Template Consistency Verification (Priority: P1)
+
+As a Platform Maintainer, I want the build system to verify that the required templates exist and are valid so that broken or missing templates do not reach the users.
+
+**Why this priority**: Prevents regression and ensures reliability of the scaffolding tool.
+
+**Independent Test**: Can be tested by removing a template from `internal/templates` and running the test suite, which should fail.
+
+**Acceptance Scenarios**:
+
+1. **Given** the source code, **When** I run the project test suite, **Then** it checks for the existence of `docker-build.yaml.tmpl` and `fluxcd.yaml.tmpl` in `internal/templates`.
+2. **Given** a template file is missing from `internal/templates`, **When** I run the test suite, **Then** the test fails with a clear error message.
+
 ### Edge Cases
 
 - What happens when an empty project name is provided? Return validation error.
 - What happens when conflicting options are set? Return validation error with clear message.
 - What happens when a template contains invalid syntax? Return parse error with template name and line.
+- **Existing Output Files**: If the target output file (e.g., `docker-build.yaml`) already exists in the destination directory, the system should prompt for confirmation before overwriting or fail safely.
+- **Corrupt Templates**: If a template file exists but is empty or unreadable, the generation process should fail with a descriptive error message.
 
 ## Requirements *(mandatory)*
 
@@ -72,6 +102,9 @@ As a developer, I need templates bundled within the library binary, so that cons
 - **FR-006**: Library MUST generate valid GitHub Actions workflow YAML content
 - **FR-007**: Library MUST be importable by external projects (public API in pkg/)
 - **FR-008**: Library MUST NOT have side effects (no disk writes, no network calls, no stdout)
+- **FR-009**: The system MUST store standard templates in `internal/templates`, including `docker-build.yaml.tmpl` and `fluxcd.yaml.tmpl`.
+- **FR-010**: The system MUST include automated tests that verify the presence and accessibility of all required templates in `internal/templates`.
+- **FR-011**: The template loading mechanism MUST support variable substitution (implied by `.tmpl` extension).
 
 ### Key Entities
 
@@ -81,6 +114,7 @@ As a developer, I need templates bundled within the library binary, so that cons
   - `UseDocker` (bool): If true, generates Dockerfile and docker-publish workflow.
   - `WorkflowType` (string): Workflow template to use. Values: `standard` (Go test/lint), `docker` (build+push), `minimal` (simple check).
 - **Generator**: Interface for feature modules to implement, enabling extensibility.
+- **Template Registry**: The collection of file templates located in `internal/templates`.
 
 ## Success Criteria *(mandatory)*
 
@@ -91,6 +125,8 @@ As a developer, I need templates bundled within the library binary, so that cons
 - **SC-003**: 100% of public API functions have corresponding test coverage
 - **SC-004**: Zero side effects verified by running tests in read-only filesystem mode
 - **SC-005**: External projects can import and use the library with a single `go get` command
+- **SC-006**: 100% of the required templates (`docker-build.yaml.tmpl`, `fluxcd.yaml.tmpl`) are verified by the automated test suite.
+- **SC-007**: Generated files are syntactically valid YAML.
 
 ## Assumptions
 

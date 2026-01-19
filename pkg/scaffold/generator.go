@@ -1,6 +1,6 @@
 package scaffold
 
-// Generator is the interface for feature modules to implement.
+// Generator is the interface that all scaffold generators must implement
 type Generator interface {
 	Generate(cfg Config) ([]File, error)
 }

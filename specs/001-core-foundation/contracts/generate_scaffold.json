@@ -14,8 +14,13 @@
       },
       "workflow_type": {
         "type": "string",
+<<<<<<< HEAD
         "enum": ["standard", "docker", "minimal"],
         "description": "The workflow template to use (standard, docker, minimal)"
+=======
+        "enum": ["go", "typescript", "python"],
+        "description": "The primary language of the project"
+>>>>>>> 001-core-foundation
       }
     },
     "required": ["project_name"]

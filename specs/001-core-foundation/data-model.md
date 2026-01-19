@@ -12,7 +12,11 @@ Represents a generated file.
 User-provided configuration for generation.
 - `ProjectName`: string (Required, validated for length/characters)
 - `UseDocker`: bool (Whether to include Docker-related workflows)
+<<<<<<< HEAD
 - `WorkflowType`: enum ["standard", "docker", "minimal"] (Default "standard")
+=======
+- `WorkflowType`: enum ["go", "typescript", "python"] (Default "go")
+>>>>>>> 001-core-foundation
 
 ## Interfaces
 
@@ -26,4 +30,8 @@ type Generator interface {
 ## Validation Rules
 - `ProjectName` cannot be empty.
 - `ProjectName` must be alphanumeric (hyphens allowed).
+<<<<<<< HEAD
 - `WorkflowType` must be one of the supported types (standard, docker, minimal).
+=======
+- `WorkflowType` must be one of the supported types.
+>>>>>>> 001-core-foundation

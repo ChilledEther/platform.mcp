@@ -80,7 +80,7 @@ You are Antigravity, an agentic coding assistant. This file defines the operatio
 - **Plan**: Use `/speckit.plan` (via Task tool) to generate design before writing code.
 - **Validation**: Ensure all tests pass in Docker.
 
-**Version**: 2.3.0 | **Updated**: 2026-01-17
+**Version**: 2.3.0 | **Updated**: 2026-01-19
 
 ## Active Technologies
 

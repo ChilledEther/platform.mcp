@@ -13,6 +13,8 @@ import (
 var (
 	projectName  string
 	useDocker    bool
+	withDocker   bool
+	withActions  bool
 	workflowType string
 	dryRun       bool
 	force        bool
@@ -22,15 +24,12 @@ var (
 var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "Generate project scaffolds",
-}
-
-var workflowsCmd = &cobra.Command{
-	Use:   "workflows",
-	Short: "Generate GitHub Actions workflow files",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfg := scaffold.Config{
 			ProjectName:  projectName,
-			UseDocker:    useDocker,
+			UseDocker:    withDocker || useDocker, // Support both for now
+			WithDocker:   withDocker,
+			WithActions:  withActions,
 			WorkflowType: workflowType,
 		}
 
@@ -51,12 +50,10 @@ var workflowsCmd = &cobra.Command{
 				continue
 			}
 
-			// Task 4: Implement file writing logic with directory creation
 			if err := os.MkdirAll(filepath.Dir(targetPath), 0755); err != nil {
 				return fmt.Errorf("failed to create directory: %w", err)
 			}
 
-			// Task 6: Implement overwrite protection
 			if _, err := os.Stat(targetPath); err == nil && !force {
 				if !isTerminal() {
 					return fmt.Errorf("file %s already exists, use --force to overwrite (non-interactive mode)", targetPath)
@@ -83,6 +80,19 @@ var workflowsCmd = &cobra.Command{
 	},
 }
 
+var workflowsCmd = &cobra.Command{
+	Use:   "workflows",
+	Short: "Generate GitHub Actions workflow files",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		// Delegate to generate command logic or keep independent?
+		// For now, let's keep independent but using same flags to avoid breaking changes if any
+		// But since we moved flags to Persistent on generate, they are available here.
+
+		// Map legacy useDocker flag if needed
+		return generateCmd.RunE(cmd, args)
+	},
+}
+
 func isTerminal() bool {
 	stat, _ := os.Stdin.Stat()
 	return (stat.Mode() & os.ModeCharDevice) != 0
@@ -92,10 +102,19 @@ func init() {
 	rootCmd.AddCommand(generateCmd)
 	generateCmd.AddCommand(workflowsCmd)
 
-	workflowsCmd.Flags().StringVarP(&projectName, "project-name", "p", "", "Name of the project")
-	workflowsCmd.Flags().BoolVarP(&useDocker, "docker", "d", false, "Include Dockerfile")
-	workflowsCmd.Flags().StringVarP(&workflowType, "workflow-type", "t", "go", "Type of workflow (go, typescript, node, python)")
-	workflowsCmd.Flags().BoolVar(&dryRun, "dry-run", false, "Preview only")
-	workflowsCmd.Flags().BoolVarP(&force, "force", "f", false, "Overwrite existing files")
-	workflowsCmd.Flags().StringVarP(&outputDir, "output", "o", ".", "Target directory")
+	// Shared flags (Persistent across generate and subcommands)
+	generateCmd.PersistentFlags().StringVarP(&projectName, "project-name", "p", "", "Name of the project")
+	generateCmd.PersistentFlags().StringVarP(&outputDir, "output", "o", ".", "Target directory")
+	generateCmd.PersistentFlags().BoolVar(&dryRun, "dry-run", false, "Preview only")
+	generateCmd.PersistentFlags().BoolVarP(&force, "force", "f", false, "Overwrite existing files")
+	generateCmd.PersistentFlags().StringVarP(&workflowType, "workflow-type", "t", "go", "Type of workflow (go, typescript, node, python)")
+
+	// Generate specific flags
+	generateCmd.Flags().BoolVar(&withDocker, "with-docker", false, "Include Dockerfile")
+	generateCmd.Flags().BoolVar(&withActions, "with-actions", false, "Include GitHub Actions")
+
+	// Legacy flags for workflows command (aliased or hidden if needed)
+	// Since workflows inherits persistent flags, we don't need to re-add them.
+	// But useDocker was specific to workflows.
+	workflowsCmd.Flags().BoolVarP(&useDocker, "docker", "d", false, "Include Dockerfile (legacy)")
 }

@@ -3,4 +3,4 @@ steps:
   - name: Build Image
     image: golang:1.25
     commands:
-      - go build -o app ./cmd/{{ .AppName }}
+      - go build -o app ./cmd/{{ .ProjectName }}

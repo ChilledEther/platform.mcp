@@ -10,9 +10,6 @@ import (
 )
 
 func TestGenerateCommand(t *testing.T) {
-	root := &cobra.Command{Use: "platform"}
-	root.AddCommand(generateCmd)
-
 	cases := []struct {
 		name          string
 		args          []string
@@ -56,15 +53,49 @@ func TestGenerateCommand(t *testing.T) {
 			args:    []string{"generate", "workflows", "--workflow-type", "invalid"},
 			wantErr: true,
 		},
+		{
+			name:    "multi-flag-actions-docker",
+			args:    []string{"generate", "--project-name", "multi-test", "--with-actions", "--with-docker"},
+			wantErr: false,
+			expectedFiles: []string{
+				".github/workflows/ci.yaml",
+				"Dockerfile",
+				"docker-build.yaml",
+				".github/workflows/go.yaml",
+			},
+		},
+		{
+			name:    "with-flux-flag",
+			args:    []string{"generate", "--project-name", "flux-test", "--with-flux"},
+			wantErr: false,
+			expectedFiles: []string{
+				"fluxcd.yaml",
+				".github/workflows/go.yaml",
+			},
+		},
 	}
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
+			// Reset flag values before each test to avoid state pollution
+			projectName = ""
+			workflowType = "go"
+			useDocker = false
+			withDocker = false
+			withActions = false
+			withFlux = false
+			dryRun = false
+			force = false
+			outputDir = "."
+
 			tmpDir, err := os.MkdirTemp("", "platform-test-*")
 			if err != nil {
 				t.Fatalf("failed to create temp dir: %v", err)
 			}
 			defer os.RemoveAll(tmpDir)
+
+			root := &cobra.Command{Use: "platform"}
+			root.AddCommand(generateCmd)
 
 			buf := new(bytes.Buffer)
 			root.SetOut(buf)

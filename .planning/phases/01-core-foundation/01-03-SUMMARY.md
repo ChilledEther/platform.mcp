@@ -2,16 +2,16 @@
 phase: 01-core-foundation
 plan: 03
 subsystem: core
-tags: scaffold, generators, templates, go
+tags: [scaffold, generators, templates, go]
 requires:
   - phase: 01-core-foundation
-    provides: types, templates
+    provides: [Core types, Generator interface, Template loader]
 provides:
   - ActionsGenerator
   - DockerGenerator
   - FluxGenerator
   - ProjectGenerator
-affects: cli
+affects: [02-platform-cli, 03-platform-mcp]
 tech-stack:
   added: []
   patterns:
@@ -32,8 +32,11 @@ key-decisions:
   - "Updated Config struct to include feature flags (WithActions, etc.) for conditional generation"
   - "Used internal/templates package for loading instead of per-generator embedding"
   - "Created missing templates (Dockerfile, FluxCD) to satisfy generator requirements"
+patterns-established:
+  - "Sub-generator pattern: Breaking down complex generation into focused units"
+  - "Config-driven generation: Using feature flags to control output"
 issues-created: []
-duration: 6 min
+duration: 6min
 completed: 2026-01-19
 ---
 
@@ -113,4 +116,4 @@ None - smooth execution with auto-fixes.
 
 ## Next Phase Readiness
 - Core logic is complete and tested.
-- Ready for CLI implementation (Phase 02 or next plan in 01).
+- Ready for CLI implementation (Phase 02).

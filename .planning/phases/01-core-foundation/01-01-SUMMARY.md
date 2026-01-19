@@ -8,8 +8,7 @@ provides:
   - Core types (Config, File)
   - Generator interface
   - Initial module structure
-affects:
-  - 01-02-PLAN.md
+affects: [01-02, 01-03]
 tech-stack:
   added: []
   patterns: [TDD, Interface-based design]
@@ -19,9 +18,13 @@ key-files:
     - pkg/scaffold/generator.go
   modified: []
 key-decisions:
-  - "None - followed plan as specified"
+  - "Used strict TDD cycle for core logic to establish pattern"
+  - "Separated interface definition from implementation for clean testing"
+patterns-established:
+  - "TDD: Red-Green-Refactor cycle for all business logic"
+  - "Interface-based design: Decoupling generation logic from implementation"
 issues-created: []
-duration: 5 min
+duration: 5min
 completed: 2026-01-19
 ---
 
@@ -48,7 +51,7 @@ completed: 2026-01-19
 1. **Task 1: Project Skeleton** - `29bd7a6` (chore)
 2. **Task 2: Define Types (RED)** - `1f88d6d` (test)
 3. **Task 2: Define Types (GREEN)** - `1d628a7` (feat)
-4. **Task 3: Generator Interface** - (hash from next command) (feat)
+4. **Task 3: Generator Interface** - `d4adfcf` (feat)
 
 ## Files Created/Modified
 - `go.mod` - Module definition

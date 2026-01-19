@@ -14,7 +14,7 @@ import "github.com/modelcontextprotocol/platform.mcp/pkg/scaffold"
 func main() {
     cfg := scaffold.Config{
         ProjectName: "my-app",
-        WorkflowType: "go",
+        WorkflowType: "standard",
     }
     
     files, err := scaffold.Generate(cfg)

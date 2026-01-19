@@ -14,8 +14,8 @@
       },
       "workflow_type": {
         "type": "string",
-        "enum": ["go", "typescript", "python"],
-        "description": "The primary language of the project"
+        "enum": ["standard", "docker", "minimal"],
+        "description": "The workflow template to use (standard, docker, minimal)"
       }
     },
     "required": ["project_name"]
